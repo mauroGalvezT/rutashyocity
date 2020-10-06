@@ -37,7 +37,7 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        // Checking for first time launch - before calling setContentView()
+        // Comprobando el lanzamiento por primera vez, antes de llamar a setContentView()
         prefManager = new PrefManager(this);
         context = IntroActivity.this;
         if (!prefManager.isFirstTimeLaunch2()) {
@@ -45,7 +45,7 @@ public class IntroActivity extends AppCompatActivity {
             finish();
         }
 
-        // Making notification bar transparent
+        // Hacer transparente la barra de notificaciones
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
@@ -53,11 +53,11 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
 
 
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
-        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-        btnSkip = (Button) findViewById(R.id.btn_skip);
+        viewPager = findViewById(R.id.view_pager);
+        dotsLayout = findViewById(R.id.layoutDots);
+        btnSkip = findViewById(R.id.btn_skip);
         //btnSkip.setTypeface(AppConst.font_quicksand_medium(context));
-        btnNext = (Button) findViewById(R.id.btn_next);
+        btnNext =  findViewById(R.id.btn_next);
         //btnNext.setTypeface(AppConst.font_quicksand_medium(context));
 
 
@@ -162,7 +162,7 @@ public class IntroActivity extends AppCompatActivity {
     };
 
     /**
-     * Making notification bar transparent
+     * Hacer transparente la barra de notificaciones
      */
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

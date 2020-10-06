@@ -60,7 +60,7 @@ public class splash extends AppCompatActivity {
     }
 
     /**
-     * Making notification bar transparent
+     * Hacer transparente la barra de notificaciones
      */
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
