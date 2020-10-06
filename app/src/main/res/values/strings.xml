@@ -3,4 +3,7 @@
     <string name="login">Login</string>
     <string name="ingrese_a_su_cuenta">Ingrese a su cuenta</string>
     <string name="recibira_su_recorrido">Recibira su recorrido</string>
+    <string name="rutas_huancayo">Rutas Huancayo</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="saltar">saltar</string>
 </resources>
