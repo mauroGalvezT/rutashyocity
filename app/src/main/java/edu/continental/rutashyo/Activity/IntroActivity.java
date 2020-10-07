@@ -1,4 +1,4 @@
-package edu.continental.rutashyo;
+package edu.continental.rutashyo.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import edu.continental.rutashyo.R;
 import edu.continental.rutashyo.settings.PrefManager;
 
 public class IntroActivity extends AppCompatActivity {
