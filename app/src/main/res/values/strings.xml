@@ -34,6 +34,7 @@
     <string name="color">Color</string>
     <string name="numero_placa">Numero de placa</string>
     <string name="registrar">Registrar</string>
+    <string name="campo_vacio">Campo vacio</string>
 
 
 </resources>
