@@ -1,4 +1,4 @@
-package edu.continental.rutashyo;
+package edu.continental.rutashyo.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import edu.continental.rutashyo.R;
 import edu.continental.rutashyo.settings.PrefManager;
 
 

@@ -1,4 +1,4 @@
-package edu.continental.rutashyo;
+package edu.continental.rutashyo.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import edu.continental.rutashyo.Activity.LoginConductorActivity;
-import edu.continental.rutashyo.Activity.LoginUserActivity;
+import edu.continental.rutashyo.R;
 
 public class MainActivity extends AppCompatActivity {
 

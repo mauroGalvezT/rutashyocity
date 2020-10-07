@@ -19,4 +19,11 @@
     <string name="contrasena">Contraseña</string>
     <string name="confirma_tu_contrasena">Confirma tú contraseña</string>
     <string name="telefono">Telefono</string>
+    <string name="ingresa_tu_contrasena">Ingresa tu contraseña</string>
+    <string name="ingresa_tu_telefono">Ingresa tu telefono</string>
+    <string name="ingresa_telefono_valido">Ingrese un telefono válido</string>
+    <string name="ingresa_email">Ingrese su correo electronico</string>
+    <string name="pass_requiere_8_caracteres">La contraseña requiere al menos 8 caracteres</string>
+
+
 </resources>
