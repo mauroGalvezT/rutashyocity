@@ -213,6 +213,7 @@ el layout no tenra limites
         }
     }
 
+    //consumir api get
     public void crearUser(){
         String url  = AppConst.Server_url+
                 AppConst.Registro+
