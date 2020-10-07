@@ -33,7 +33,12 @@
         android:layout_height="match_parent"
         android:gravity="bottom"
         android:orientation="vertical">
-
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_marca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextColor="@color/colorBlanco"
+            android:textColorHint="@color/colorBlanco">
         <EditText
             android:id="@+id/edtMarca"
             android:layout_width="match_parent"
@@ -46,6 +51,8 @@
             android:padding="15dp"
             android:textColor="@color/colorBlanco"
             android:textColorHint="@color/colorBlanco" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"

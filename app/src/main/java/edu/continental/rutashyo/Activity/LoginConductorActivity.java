@@ -59,7 +59,7 @@ public class LoginConductorActivity extends AppCompatActivity implements Respons
     }
     @Override
     public void onResponse(JSONObject response) {
-        startActivity(new Intent(LoginConductorActivity.this, InicioUserActivity.class));
+        startActivity(new Intent(LoginConductorActivity.this, RegistroVehiculoActivity.class));
         finish();
         Toast.makeText(this, "Login Correcto", Toast.LENGTH_SHORT).show();
 
