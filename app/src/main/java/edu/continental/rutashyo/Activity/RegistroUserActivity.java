@@ -119,14 +119,14 @@ el layout no tenra limites
             crearUser();
            // new crearUser().execute();
         }else{
-            Toast.makeText(this, getResources().getString(R.string.ingresa_tu_contrasena), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.contrasena_no_coincide), Toast.LENGTH_SHORT).show();
 
         }
     }
 
     private boolean validarNombre() {
         if (edtNombre.getText().toString().trim().isEmpty()) {
-            input_layout_nombre.setError(getResources().getString(R.string.ingresa_tu_contrasena));
+            input_layout_nombre.setError(getResources().getString(R.string.ingresa_tu_nombre));
             requestFocus(edtNombre);
             return false;
         } else {
