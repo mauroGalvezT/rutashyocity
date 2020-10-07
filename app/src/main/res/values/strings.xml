@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Rutas transporte huancayo</string>
+    <string name="login">Login</string>
+    <string name="ingrese_a_su_cuenta">Ingrese a su cuenta</string>
+    <string name="recibira_su_recorrido">Recibira su recorrido</string>
+    <string name="rutas_huancayo">Rutas Huancayo</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="saltar">saltar</string>
+    <string name="conductor">Conductor</string>
+    <string name="pasajero">Pasajero</string>
+    <string name="bienvenido">BIENVENIDO</string>
+    <string name="email">Email</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="registro">Registro</string>
+    <string name="ya_tengo_cuenta">Ya tengo cuenta</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="direccion">Dirección</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="confirma_tu_contrasena">Confirma tú contraseña</string>
+    <string name="contrasena_no_coincide">La contraseña no coincide</string>
+    <string name="telefono">Telefono</string>
+    <string name="ingresa_tu_contrasena">Ingresa tu contraseña</string>
+    <string name="ingresa_tu_nombre">Ingresa tu nombre</string>
+    <string name="ingresa_tu_telefono">Ingresa tu telefono</string>
+    <string name="ingresa_telefono_valido">Ingrese un telefono válido</string>
+    <string name="ingresa_email">Ingrese su correo electronico</string>
+    <string name="pass_requiere_8_caracteres">La contraseña requiere al menos 8 caracteres</string>
+
+
+</resources>
