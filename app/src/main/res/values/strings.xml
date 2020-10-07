@@ -27,6 +27,13 @@
     <string name="ingresa_email">Ingrese su correo electronico</string>
     <string name="pass_requiere_8_caracteres">La contraseña requiere al menos 8 caracteres</string>
     <string name="bienvenido_conductor">Bienvenido Conductor</string>
+    <string name="registrar_vehiculo">Registrar Vehiculo</string>
+    <string name="numero_de_placa">Número de placa</string>
+    <string name="marca">Marca</string>
+    <string name="modelo">Modelo</string>
+    <string name="color">Color</string>
+    <string name="numero_placa">Numero de placa</string>
+    <string name="registrar">Registrar</string>
 
 
 </resources>
