@@ -26,6 +26,7 @@
     <string name="ingresa_telefono_valido">Ingrese un telefono válido</string>
     <string name="ingresa_email">Ingrese su correo electronico</string>
     <string name="pass_requiere_8_caracteres">La contraseña requiere al menos 8 caracteres</string>
+    <string name="bienvenido_conductor">Bienvenido Conductor</string>
 
 
 </resources>
