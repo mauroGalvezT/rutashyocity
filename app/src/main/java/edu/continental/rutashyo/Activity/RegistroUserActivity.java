@@ -2,15 +2,13 @@ package edu.continental.rutashyo.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 
 import edu.continental.rutashyo.R;
 
-public class LoginUserActivity extends AppCompatActivity {
+public class RegistroUserActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +18,6 @@ public class LoginUserActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
 
-        setContentView(R.layout.activity_login_user);
-    }
-    public void OpenSignupPage(View view) {
-        startActivity(new Intent(LoginUserActivity.this,RegistroUserActivity.class));
+        setContentView(R.layout.activity_registro_user);
     }
 }

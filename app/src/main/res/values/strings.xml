@@ -8,4 +8,15 @@
     <string name="saltar">saltar</string>
     <string name="conductor">Conductor</string>
     <string name="pasajero">Pasajero</string>
+    <string name="bienvenido">BIENVENIDO</string>
+    <string name="email">Email</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="registro">Registro</string>
+    <string name="ya_tengo_cuenta">Ya tengo cuenta</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="direccion">Dirección</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="confirma_tu_contrasena">Confirma tú contraseña</string>
+    <string name="telefono">Telefono</string>
 </resources>
