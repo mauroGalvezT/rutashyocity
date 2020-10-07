@@ -2,7 +2,8 @@
     <string name="app_name">Rutas transporte huancayo</string>
     <string name="login">Login</string>
     <string name="ingrese_a_su_cuenta">Ingrese a su cuenta</string>
-    <string name="recibira_su_recorrido">Recibira su recorrido</string>
+    <string name="recibira_su_recorrido">Recibira el recorrido.</string>
+    <string name="recibira_su_recorrido_disfrute">Recibira el recorrido de la empresa de transporte selecionada y disfrute del viaje.</string>
     <string name="rutas_huancayo">Rutas Huancayo</string>
     <string name="siguiente">Siguiente</string>
     <string name="saltar">saltar</string>
@@ -34,6 +35,7 @@
     <string name="color">Color</string>
     <string name="numero_placa">Numero de placa</string>
     <string name="registrar">Registrar</string>
+    <string name="registrese_en_nuestra_app">Registrese en nuestra aplicación para obtener todas las funcionalidades</string>
 
 
 </resources>

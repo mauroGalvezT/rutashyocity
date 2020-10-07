@@ -254,39 +254,125 @@ el layout no tenra limites
     }
 
 /*
-    public String enviarRegistroGET(String nombre, String apellido, String telefono, String email, String pass){
-        URL url = null;
-        String linea = "";
-        int respuesta = 0;
-        StringBuilder result = null; // recibira la data
+       private class createUser extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String url = global_url+"insert_user.php";
+            StringRequest jsonObjReq = new StringRequest(Request.Method.POST,
+                    url,
+                    new Response.Listener<String>() {
 
-        try {
-            url = new  URL(AppConst.Server_url+
-                    AppConst.Registro+
-                    "US_Nombres="+ nombre+
-                    "&US_Apellidos="+apellido+
-                    "&US_Direccion="+"null"+
-                    "&US_Fecha_Nacimiento="+"null"+
-                    "&US_Nacionalidad="+"Peru"+
-                    "&US_Telefono="+telefono+
-                    "&US_Email="+email+
-                    "&US_Contrasena="+pass+
-                    "&US_Tipo="+"Cliente");
-            HttpURLConnection conection = (HttpURLConnection) url.openConnection();
-            respuesta = conection.getResponseCode();//respuesta de 200
-            result=new StringBuilder();
-            if(respuesta == HttpURLConnection.HTTP_OK){
-                InputStream in = new BufferedInputStream(conection.getInputStream());
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                progressBar_subs.setVisibility(View.INVISIBLE);
+                                JSONObject json = new JSONObject(response);
+                                JSONObject msg = json.getJSONObject("msg");
+                                String etat = msg.getString("etat");
+                                if(etat.equals("1")){
+                                    JSONObject user = json.getJSONObject("user");
 
-                while ((linea = reader.readLine()) != null){
-                    result.append(linea);
+                                    phone_subs.setText("");
+                                    password_subs.setText("");
+                                    password_conf.setText("");
+                                    firstname_subs.setText("");
+                                    email_insc.setText("");
+//                                    Toast.makeText(context, "enhorabuena", Toast.LENGTH_SHORT).show();
+
+                                    if(account_type.equals("cliente")){
+                                        saveProfile(new User(user.getString("id"),user.getString("nom"),user.getString("prenom"),user.getString("phone")
+                                                ,user.getString("email"),user.getString("statut"),user.getString("login_type"),user.getString("tonotify"),user.getString("device_id"),
+                                                user.getString("fcm_id"),user.getString("creer"),user.getString("modifier"),user.getString("photo_path"),user.getString("user_cat"),"",user.getString("currency")
+                                                ,"","" ,"","","","","",user.getString("country")));
+                                    }
+
+//                                    phone_subs.setText(phone);
+//                                    Connexion.input_phone.setText(user.getString("phone"));
+                                    launchHomeScreen();
+                                }else if(etat.equals("2")){
+                                    Toast.makeText(context, "This number already exists", Toast.LENGTH_SHORT).show();
+                                    requestFocus(phone_subs);
+                                    input_layout_phone_subs.setError("Enter another phone number");
+                                }else
+                                    Toast.makeText(context, "Failure to register", Toast.LENGTH_SHORT).show();
+
+                            } catch (JSONException e) {
+
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    progressBar_subs.setVisibility(View.INVISIBLE);
                 }
-            }
-        }catch (Exception e){
-            return result.toString();
+            }) {
+
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("firstname", val_firstname_subs);
+                    params.put("phone", val_phone_subs);
+                    params.put("password", val_password_subs);
+                    params.put("email", val_email_subs);
+                    params.put("account_type", account_type);
+                    params.put("login_type", "phone");
+                    params.put("tonotify", "yes");
+                    return params;
+                }
+
+            };
+            AppController.getInstance().addToRequestQueue(jsonObjReq);
+            jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                    10000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            return null;
         }
-    return null;
+
+        @Override
+        protected void onPostExecute(String result) {
+            //to add spacing between cards
+            if (this != null) {
+
+            }
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+    }
+
+    private void saveProfile(User user){
+        M.setNom(user.getNom(),context);
+        M.setPrenom(user.getPrenom(),context);
+        M.setPhone(user.getPhone(),context);
+        M.setEmail(user.getEmail(),context);
+        M.setID(user.getId(),context);
+        M.setlogintype(user.getLogin_type(),context);
+        M.setUsername(user.getNom(),context);
+        M.setUserCategorie(user.getUser_cat(),context);
+//        M.setCoutByKm(user.getCost(),context);
+        M.setCurrentFragment("",context);
+        M.setCurrency(user.getCurrency(),context);
+        if(!user.getUser_cat().equals("user_app"))
+            M.setStatutConducteur(user.getStatut_online(),context);
+
+        M.setVehicleBrand(user.getVehicle_brand(),context);
+        M.setVehicleColor(user.getVehicle_color(),context);
+        M.setVehicleModel(user.getVehicle_model(),context);
+        M.setVehicleNumberPlate(user.getVehicle_numberplate(),context);
+        M.setCountry(user.getCountry(),context);
+        if(user.getTonotify().equals("yes"))
+            M.setPushNotification(true, context);
+        else
+            M.setPushNotification(false, context);
+
+        updateFCM(M.getID(context));
+    }
 
     }
 
