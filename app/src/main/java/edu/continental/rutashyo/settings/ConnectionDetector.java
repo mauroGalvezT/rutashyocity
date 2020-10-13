@@ -1,10 +1,6 @@
 package edu.continental.rutashyo.settings;
 
-/**
- * Created by Woumtana Pingdiwindé Youssouf 03/2019
- * Tel: +226 63 86 22 46 - 73 35 41 41
- * Email: issoufwoumtana@gmail.com
- **/
+
 
 import android.content.Context;
 import android.net.ConnectivityManager;
