@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -24,16 +26,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.continental.rutashyo.R;
+import edu.continental.rutashyo.model.user;
 import edu.continental.rutashyo.settings.AppConst;
 
-public class LoginUserActivity extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener{
+public class LoginUserActivity extends AppCompatActivity implements Response.Listener<JSONObject>,Response.ErrorListener {
 
     EditText edtEmailLogin, edtPassLogin;
     String valEmailLogin, valPassLogin;
     FloatingActionButton btnIniciarSesion;
+
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
 
@@ -64,36 +70,51 @@ public class LoginUserActivity extends AppCompatActivity implements Response.Lis
         startActivity(new Intent(LoginUserActivity.this,RegistroUserActivity.class));
     }
     void Login(){
-        String url  = AppConst.Server_url+
-                AppConst.Registro+
-                "US_Email="+ valEmailLogin+
+        String url  = AppConst.Server_url_user+
+                AppConst.Login+
+                "US_Email="+valEmailLogin+
                 "&US_Contrasena="+valPassLogin;
+
+
         url = url.replace(" ", "%20");
         request = Volley.newRequestQueue(this);
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,url,null,this,this);
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonObjectRequest);
+
+
+
+        Toast.makeText(this, "Resultado", Toast.LENGTH_SHORT).show();
     }
-    @Override
-    public void onResponse(JSONObject response) {
-        startActivity(new Intent(LoginUserActivity.this, InicioUserActivity.class));
-        finish();
-        Toast.makeText(this, "Login Correcto", Toast.LENGTH_SHORT).show();
-
-
-    }
-
     @Override
     public void onErrorResponse(VolleyError error) {
-        // progreso.hide();
-        /*
-        Toast.makeText(this, "No se puede guardar", Toast.LENGTH_SHORT).show();
-        Log.i("Error", error.toString());
 
-         */
-        Toast.makeText(this, "no registrado", Toast.LENGTH_SHORT).show();
-
-
+        Toast.makeText(this,"No se pudo consultar"+ error.toString(), Toast.LENGTH_SHORT).show();
+        Log.i("Error ", error.toString());
     }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
+        Toast.makeText(this, "Mensaje " + response, Toast.LENGTH_SHORT).show();
+        user miUsuario = new user();
+        JSONArray json = response.optJSONArray("usuario");
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = json.getJSONObject(0);
+            miUsuario.setNombres(jsonObject.optString("US_Nombres"));
+            miUsuario.setContrasena(jsonObject.optString("US_Contrasena"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        edtEmailLogin.setText(miUsuario.getNombres());
+        edtPassLogin.setText(miUsuario.getContrasena());
+    }
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
+}
+
 
     /*
     *     private class loginUser extends AsyncTask<String, Void, String> {
@@ -237,4 +258,3 @@ public class LoginUserActivity extends AppCompatActivity implements Response.Lis
         updateFCM(M.getID(context));
     }
     * */
-}

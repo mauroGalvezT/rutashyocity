@@ -11,17 +11,7 @@ public class user {
     private String email;
     private String contrasena;
 
-    public user(String id, String nombres, String apellidos, String direccion, String fechaNacimiento, String nacionalidad, String telefono, String email, String contrasena) {
-        this.id = id;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.direccion = direccion;
-        this.fechaNacimiento = fechaNacimiento;
-        this.nacionalidad = nacionalidad;
-        this.telefono = telefono;
-        this.email = email;
-        this.contrasena = contrasena;
-    }
+
 
     public String getId() {
         return id;

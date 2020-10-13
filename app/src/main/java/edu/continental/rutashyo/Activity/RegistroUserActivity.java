@@ -257,7 +257,7 @@ el layout no tenra limites
        private class createUser extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            String url = global_url+"insert_user.php";
+            String url = global_url+AppConst.Registro;
             StringRequest jsonObjReq = new StringRequest(Request.Method.POST,
                     url,
                     new Response.Listener<String>() {
@@ -265,24 +265,25 @@ el layout no tenra limites
                         @Override
                         public void onResponse(String response) {
                             try {
-                                progressBar_subs.setVisibility(View.INVISIBLE);
+
                                 JSONObject json = new JSONObject(response);
                                 JSONObject msg = json.getJSONObject("msg");
                                 String etat = msg.getString("etat");
                                 if(etat.equals("1")){
-                                    JSONObject user = json.getJSONObject("user");
+                                    JSONObject user = json.getJSONObject("cliente");
 
-                                    phone_subs.setText("");
-                                    password_subs.setText("");
-                                    password_conf.setText("");
-                                    firstname_subs.setText("");
-                                    email_insc.setText("");
+                                    valNombre.setText("");
+                                    valApelido.setText("");
+                                    valTelefono.setText("");
+                                    val_Email.setText("");
+                                    valPass.setText("");
+                                    valPassConf.setText("");
 //                                    Toast.makeText(context, "enhorabuena", Toast.LENGTH_SHORT).show();
 
                                     if(account_type.equals("cliente")){
-                                        saveProfile(new User(user.getString("id"),user.getString("nom"),user.getString("prenom"),user.getString("phone")
-                                                ,user.getString("email"),user.getString("statut"),user.getString("login_type"),user.getString("tonotify"),user.getString("device_id"),
-                                                user.getString("fcm_id"),user.getString("creer"),user.getString("modifier"),user.getString("photo_path"),user.getString("user_cat"),"",user.getString("currency")
+                                        saveProfile(new User(user.getString("id"),user.getString("US_Nombres"),user.getString("US_Apellidos"),user.getString("US_Direccion")
+                                                ,user.getString("US_Fecha_Nacmiento"),user.getString("US_Nacionalidad"),user.getString("US_Telefono"),user.getString("US_Email"),user.getString("US_Contrasena"),
+                                                user.getString("US_Tipo"),user.getString("creer"),user.getString("modifier"),user.getString("photo_path"),user.getString("user_cat"),"",user.getString("currency")
                                                 ,"","" ,"","","","","",user.getString("country")));
                                     }
 
