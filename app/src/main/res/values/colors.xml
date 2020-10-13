@@ -12,6 +12,9 @@
     <color name="secondaryDarkColor">#62b2c7</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#000000</color>
+    <color name="colorBlack">#000000</color>
+
+    <color name="grisGooglePlay">#5f6368</color>
 
     <color name="colorLogoBlack">#242122</color>
 

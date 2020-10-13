@@ -43,6 +43,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="perfil">Perfil</string>
+    <string name="solicitar_ahora">Solicitar Ahora</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="partida">Partida</string>
+    <string name="donde_quiere_ir">Donde quieres ir?</string>
+    <string name="this_service_requires_the_activation_of_the_gps">Este servicio requiere de la activación del gps</string>
+    <string name="tu_punto_de_partida">Tu punto de partida</string>
+    <string name="destino">Destino</string>
+    <string name="quieres_ir_aqui">Quieres ir aqui</string>
 
 
 </resources>

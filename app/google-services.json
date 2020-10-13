@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "945949907307",
+    "firebase_url": "https://rutashyosmart.firebaseio.com",
+    "project_id": "rutashyosmart",
+    "storage_bucket": "rutashyosmart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945949907307:android:d0859253b3aa0a46e4d42e",
+        "android_client_info": {
+          "package_name": "edu.continental.rutashyo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945949907307-88mfn7lf387b7tfmicln15f7i6lcoo7a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.continental.rutashyo",
+            "certificate_hash": "7412f6d6d5589316f468d66e4c86a8a92f81c1ef"
+          }
+        },
+        {
+          "client_id": "945949907307-gor4r9f9fgfpsp2nqru3ajps66cba0hb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE7f8f63Jc149_mCpMOxN6yRUUZ6DzhS0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945949907307-gor4r9f9fgfpsp2nqru3ajps66cba0hb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
