@@ -1,4 +1,4 @@
-package edu.continental.rutashyo.Activity;
+package edu.continental.rutashyo.Activity.Conductor;
 
 import androidx.appcompat.app.AppCompatActivity;
 

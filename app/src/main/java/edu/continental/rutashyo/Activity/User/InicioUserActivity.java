@@ -1,4 +1,4 @@
-package edu.continental.rutashyo.Activity;
+package edu.continental.rutashyo.Activity.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 

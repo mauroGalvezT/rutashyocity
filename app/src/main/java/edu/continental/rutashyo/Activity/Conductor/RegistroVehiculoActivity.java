@@ -1,4 +1,4 @@
-package edu.continental.rutashyo.Activity;
+package edu.continental.rutashyo.Activity.Conductor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
+import edu.continental.rutashyo.Activity.User.InicioUserActivity;
 import edu.continental.rutashyo.R;
 
 public class RegistroVehiculoActivity extends AppCompatActivity {
@@ -117,7 +118,7 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
 
     public void registrarVehiculo(){
 
-        startActivity(new Intent(RegistroVehiculoActivity.this,InicioUserActivity.class));
+        startActivity(new Intent(RegistroVehiculoActivity.this, InicioUserActivity.class));
     }
 
 

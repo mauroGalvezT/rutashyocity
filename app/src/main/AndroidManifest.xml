@@ -11,19 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.RegistroVehiculoActivity"
+        <activity android:name=".Activity.Conductor.RegistroVehiculoActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".Activity.InicioUserActivity"
+            android:name=".Activity.User.InicioUserActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activity.RegistroUserActivity"
+            android:name=".Activity.User.RegistroUserActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activity.LoginConductorActivity"
+            android:name=".Activity.Conductor.LoginConductorActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activity.LoginUserActivity"
+            android:name=".Activity.User.LoginUserActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.IntroActivity"
