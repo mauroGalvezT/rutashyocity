@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,6 +28,7 @@ public class LoginUserActivity extends AppCompatActivity {
     EditText edtEmailLogin, edtPassLogin;
     String valEmailLogin, valPassLogin;
     FloatingActionButton btnIniciarSesion;
+    TextView txtRecuperarPass;
 
     SmartCityService smartCityService;
     SmartCityClient smartCityClient;
@@ -56,6 +58,13 @@ public class LoginUserActivity extends AppCompatActivity {
                 Login();
             }
         });
+        txtRecuperarPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginUserActivity.this, CambiarPassActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void retrofitInit() {
@@ -66,6 +75,7 @@ public class LoginUserActivity extends AppCompatActivity {
         edtEmailLogin = findViewById(R.id.edtEmailLogin);
         edtPassLogin = findViewById(R.id.edtPassLogin);
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion);
+        txtRecuperarPass = findViewById(R.id.txtRecuperarPass);
     }
 
 

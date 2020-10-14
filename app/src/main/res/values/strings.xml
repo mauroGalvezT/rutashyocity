@@ -54,6 +54,9 @@
     <string name="elige_tu_cuenta">Elige tu cuenta</string>
     <string name="ingrese_su_informacion">Ingrese su información</string>
     <string name="guardar_cambios">Guardar Cambios</string>
+    <string name="se_te_olvido_la_contasena">Se te olvido la Contaseña</string>
+    <string name="cambiar_contrasena">Cambiar Contraseña</string>
+    <string name="recuperar_constrasena">Recuperar Constraseña</string>
 
 
 </resources>
