@@ -53,6 +53,7 @@
     <string name="quieres_ir_aqui">Quieres ir aqui</string>
     <string name="elige_tu_cuenta">Elige tu cuenta</string>
     <string name="ingrese_su_informacion">Ingrese su información</string>
+    <string name="guardar_cambios">Guardar Cambios</string>
 
 
 </resources>
