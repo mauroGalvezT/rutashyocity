@@ -1,219 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.User.RegistroUserActivity">
+    tools:context=".Activity.User.RegistroUserActivity"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/gradientlogin">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/gradientlogin"
-        android:scaleType="centerCrop"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/registro"
-        android:textColor="@android:color/white"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.151"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:layout_margin="15dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_marginTop="5dp"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ingrese_su_informacion" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="bottom">
+        android:layout_centerInParent="true">
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_nombre"
+            android:textColorHint="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintTextColor="@color/colorBlanco"
-            android:textColorHint="@color/colorBlanco">
-        <EditText
-            android:id="@+id/edtNombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:hint="@string/nombre"
-            android:inputType="textEmailAddress"
-            android:padding="15dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_profile_con"
+                android:drawableTint="@color/white"
+                android:hint="@string/nombre"
+                android:inputType="textPersonName"
+                android:shadowColor="@color/colorBlanco"
+                android:textColor="@color/white"
+                android:textColorHighlight="@color/colorBlanco"
+                android:textColorHint="@color/white"
+                android:textColorLink="@color/colorBlanco"
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
-
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_apellido"
+            android:textColorHint="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintTextColor="@color/colorBlanco"
-            android:textColorHint="@color/colorBlanco">
-        <EditText
-            android:id="@+id/edtApellido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:hint="@string/apellidos"
-            android:inputType="textEmailAddress"
-            android:padding="15dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtApellido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_profile_con"
+                android:drawableTint="@color/white"
+                android:hint="@string/apellidos"
+                android:inputType="textPersonName"
+                android:shadowColor="@color/colorBlanco"
+                android:textColor="@color/white"
+                android:textColorHighlight="@color/colorBlanco"
+                android:textColorHint="@color/white"
+                android:textColorLink="@color/colorBlanco"
+                android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_telefono"
+            android:textColorHint="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintTextColor="@color/colorBlanco"
-            android:textColorHint="@color/colorBlanco">
-        <EditText
-            android:id="@+id/edtTelefono"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:hint="@string/telefono"
-            android:inputType="textEmailAddress"
-            android:padding="15dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content">
 
+            <EditText
+                android:maxLength="15"
+                android:drawableTint="@color/white"
+                android:drawableRight="@drawable/ic_phone_outline"
+                android:textSize="16sp"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+
+                android:id="@+id/edtTelefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:hint="@string/telefono" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:hintTextColor="@color/colorBlanco"
-            android:textColorHint="@color/colorBlanco">
-        <EditText
-            android:id="@+id/edtEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:padding="15dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:textColorHint="@color/white">
 
+            <EditText
+                android:drawableTint="@color/white"
+                android:drawableRight="@drawable/ic_message_outline"
+                android:textSize="16sp"
+                android:id="@+id/edtEmail"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="@string/email" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_pass"
+            android:textColorHint="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintTextColor="@color/colorBlanco"
-            android:textColorHint="@color/colorBlanco">
-        <EditText
-            android:id="@+id/edtPass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:hint="@string/contrasena"
-            android:inputType="textPassword"
-            android:padding="15dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content">
 
+            <EditText
+                android:maxLength="12"
+                android:drawableTint="@color/white"
+                android:drawableRight="@drawable/ic_password_outline"
+                android:textSize="16sp"
+                android:id="@+id/edtPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+
+                android:inputType="textPassword"
+                android:hint="@string/contrasena" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_passConf"
+            android:textColorHint="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintTextColor="@color/colorBlanco"
-            android:textColorHint="@color/colorBlanco">
-        <EditText
-            android:id="@+id/edtPass_conf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:hint="@string/confirma_tu_contrasena"
-            android:inputType="textPassword"
-            android:padding="15dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnEnviarRegistro"
-                android:layout_width="wrap_content"
+            <EditText
+                android:maxLength="12"
+                android:drawableTint="@color/white"
+                android:drawableRight="@drawable/ic_password_outline"
+                android:textSize="16sp"
+                android:id="@+id/edtPass_conf"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:src="@drawable/round_arrow_forward_24"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="30dp"
-                android:tint="@android:color/white"
-                android:layout_marginBottom="20dp"
-                android:elevation="0dp"
-                app:elevation="0dp"
-                android:backgroundTint="#4E525B"
-                app:fabCustomSize="80dp"
-                tools:ignore="RelativeOverlap" />
+                android:inputType="textPassword"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:hint="@string/confirma_tu_contrasena" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="30dp"
-                android:text="@string/registro"
-                android:textColor="@android:color/white"
-                android:textSize="25sp"
-                android:padding="15dp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+        <!--<CheckBox-->
+        <!--android:id="@+id/check_email"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Recevoir de notification par mail" />-->
 
-        <RelativeLayout
+        <LinearLayout
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:layout_marginTop="20dp">
+            android:orientation="vertical"
+            android:gravity="right">
 
-            <TextView
-                android:layout_width="wrap_content"
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnEnviarRegistro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/round_arrow_forward_24"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="30dp"
+                    android:tint="@android:color/white"
+                    android:layout_marginBottom="20dp"
+                    android:elevation="0dp"
+                    app:elevation="0dp"
+                    android:backgroundTint="#4E525B"
+                    app:fabCustomSize="80dp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="30dp"
+                    android:text="@string/registro"
+                    android:textColor="@android:color/white"
+                    android:textSize="25sp"
+                    android:padding="15dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="30dp"
-                android:padding="15dp"
-                android:text="@string/ya_tengo_cuenta"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+>
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/irALogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="30dp"
+                    android:padding="15dp"
+                    android:text="@string/ya_tengo_cuenta"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

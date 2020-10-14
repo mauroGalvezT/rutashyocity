@@ -137,7 +137,7 @@ el layout no tenra limites
     private boolean validarNombre() {
         if (edtNombre.getText().toString().trim().isEmpty()) {
             input_layout_nombre.setError(getResources().getString(R.string.ingresa_tu_nombre));
-            requestFocus(edtNombre);
+            //requestFocus(edtNombre);
             return false;
         } else {
             input_layout_nombre.setErrorEnabled(false);
