@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,7 +32,7 @@ public class RegistroUserActivity extends AppCompatActivity{
     FloatingActionButton btnEnviarRegistro;
     private TextInputLayout input_layout_nombre, input_layout_apellido, input_layout_telefono, input_layout_email,
             input_layout_pass, input_layout_passConf;
-
+    TextView irALoginUi;
     SmartCityService smartCityService;
     SmartCityClient smartCityClient;
 
@@ -79,6 +80,13 @@ el layout no tenra limites
                 //startActivity();
             }
         });
+        irALoginUi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(RegistroUserActivity.this, LoginUserActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void findViews() {
@@ -97,6 +105,7 @@ el layout no tenra limites
         input_layout_email = findViewById(R.id.input_layout_email);
         input_layout_pass = findViewById(R.id.input_layout_pass);
         input_layout_passConf = findViewById(R.id.input_layout_passConf);
+        irALoginUi = findViewById(R.id.irALoginUi);
     }
 
     private void enviarFormularioUser(){
