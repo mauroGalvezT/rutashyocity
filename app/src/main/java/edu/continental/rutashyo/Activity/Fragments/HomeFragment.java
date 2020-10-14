@@ -597,6 +597,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
         return view;
     }
 
+/*
     private static String getUrl(LatLng origin, LatLng dest, String directionMode) {
         // Origin of route
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
@@ -612,6 +613,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" +context.getResources().getString(R.string.google_maps_key);
         return url;
     }
+*/
 
     //return inflater.inflate(R.layout.fragment_home, container, false);
     //}
