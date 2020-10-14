@@ -3,6 +3,7 @@ package edu.continental.rutashyo.Activity.User;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
 
+import dmax.dialog.SpotsDialog;
 import edu.continental.rutashyo.R;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaRegistro;
 import edu.continental.rutashyo.Retrofit.SmartCityClient;
@@ -36,6 +38,8 @@ public class RegistroUserActivity extends AppCompatActivity{
     SmartCityService smartCityService;
     SmartCityClient smartCityClient;
 
+    AlertDialog mDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,12 @@ el layout no tenra limites
         getWindow().setStatusBarColor(Color.TRANSPARENT);
 */
         setContentView(R.layout.activity_registro_user);
+
+        mDialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Espere un momento")
+                .setCancelable(false).build();
+
 
         retrofitInit();
         findViews();
@@ -145,6 +155,7 @@ el layout no tenra limites
 
     private boolean validarNombre() {
         if (edtNombre.getText().toString().trim().isEmpty()) {
+            mDialog.dismiss();
             input_layout_nombre.setError(getResources().getString(R.string.ingresa_tu_nombre));
             //requestFocus(edtNombre);
             return false;
@@ -157,6 +168,7 @@ el layout no tenra limites
 
     private boolean validarTelefono() {
         if (edtTelefono.getText().toString().trim().isEmpty()) {
+            mDialog.dismiss();
             input_layout_telefono.setError(getResources().getString(R.string.ingresa_tu_telefono));
             requestFocus(edtTelefono);
             return false;
@@ -167,6 +179,7 @@ el layout no tenra limites
         return true;
     }
     private boolean validarTelefonoValido() {
+        mDialog.dismiss();
         if (edtTelefono.getText().toString().trim().length() < 8) {
             input_layout_telefono.setError(getResources().getString(R.string.ingresa_telefono_valido));
             requestFocus(edtTelefono);
@@ -179,6 +192,7 @@ el layout no tenra limites
     }
 
     private boolean validarEmailValido() {
+        mDialog.dismiss();
         if (edtEmail.getText().toString().trim().isEmpty()) {
             input_layout_email.setError(getResources().getString(R.string.ingresa_email));
             requestFocus(edtEmail);
@@ -191,6 +205,7 @@ el layout no tenra limites
     }
 
     private boolean validarContrasena() {
+        mDialog.dismiss();
         if (edtPass.getText().toString().trim().isEmpty()) {
             input_layout_pass.setError(getResources().getString(R.string.ingresa_tu_contrasena));
             requestFocus(edtPass);
@@ -203,6 +218,7 @@ el layout no tenra limites
     }
 
     private boolean validarContrasenaValida() {
+        mDialog.dismiss();
         if (edtPass.getText().toString().trim().length() < 8) {
             input_layout_pass.setError(getResources().getString(R.string.pass_requiere_8_caracteres));
             requestFocus(edtPass);
@@ -215,6 +231,7 @@ el layout no tenra limites
     }
 
     private boolean validarContrasenaConf() {
+        mDialog.dismiss();
         if (edtPassConf.getText().toString().trim().isEmpty()) {
             input_layout_passConf.setError(getResources().getString(R.string.confirma_tu_contrasena));
             requestFocus(edtPassConf);
@@ -234,6 +251,7 @@ el layout no tenra limites
 
 
     public void crearUser(){
+        mDialog.show();
         String name = edtNombre.getText().toString();
         String apellido = edtApellido.getText().toString();
         String telefono = edtTelefono.getText().toString();
@@ -251,17 +269,20 @@ el layout no tenra limites
                 @Override
                 public void onResponse(Call<RespuestaRegistro> call, Response<RespuestaRegistro> response) {
                     if(response.isSuccessful()){
+                        mDialog.dismiss();
                         Toast.makeText(RegistroUserActivity.this, "Registrado correctamente", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(RegistroUserActivity.this, InicioUserActivity.class);
                         startActivity(i);
                         finish();
                     }else{
+                        mDialog.dismiss();
                         Toast.makeText(RegistroUserActivity.this, "Revise sus datos de registro", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaRegistro> call, Throwable t) {
+                    mDialog.dismiss();
                     Toast.makeText(RegistroUserActivity.this, "Problemas de conexion", Toast.LENGTH_SHORT).show();
                 }
             });

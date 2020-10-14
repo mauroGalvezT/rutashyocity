@@ -2,6 +2,7 @@ package edu.continental.rutashyo.Activity.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -17,7 +18,7 @@ import edu.continental.rutashyo.R;
 public class InicioUserActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
 
-
+    AlertDialog mDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

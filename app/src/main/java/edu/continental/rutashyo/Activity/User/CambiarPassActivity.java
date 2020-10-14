@@ -2,6 +2,7 @@ package edu.continental.rutashyo.Activity.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import dmax.dialog.SpotsDialog;
 import edu.continental.rutashyo.R;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLogin;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaRegistro;
@@ -28,10 +30,15 @@ public class CambiarPassActivity extends AppCompatActivity {
     FloatingActionButton btnCambiarPass;
     SmartCityClient smartCityClient;
     SmartCityService smartCityService;
+    AlertDialog mDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cambiar_pass);
+        mDialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Espere un momento")
+                .setCancelable(false).build();
         retrofitInit();
         findViews();
         events();
@@ -50,6 +57,7 @@ public class CambiarPassActivity extends AppCompatActivity {
     }
 
     private void CambiarPass() {
+        mDialog.show();
         String email = edtChangeEmail.getText().toString();
         String pass = edtChangePass.getText().toString();
         if(email.isEmpty()){
@@ -63,17 +71,20 @@ public class CambiarPassActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<RespuestaRegistro> call, Response<RespuestaRegistro> response) {
                     if(response.isSuccessful()){
+                        mDialog.dismiss();
                         Toast.makeText(CambiarPassActivity.this, "Contraseña cambiada correctamente", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(CambiarPassActivity.this, InicioUserActivity.class);
                         startActivity(i);
                         finish();
                     }else{
+                        mDialog.dismiss();
                         Toast.makeText(CambiarPassActivity.this, "Revise el correo acceso", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaRegistro> call, Throwable t) {
+                    mDialog.dismiss();
                     Toast.makeText(CambiarPassActivity.this, "Problemas de conexion", Toast.LENGTH_SHORT).show();
                 }
             });

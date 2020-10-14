@@ -2,6 +2,7 @@ package edu.continental.rutashyo.Activity.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import dmax.dialog.SpotsDialog;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLogin;
 import edu.continental.rutashyo.Retrofit.SmartCityClient;
 import edu.continental.rutashyo.Retrofit.SmartCityService;
@@ -34,12 +36,18 @@ public class LoginUserActivity extends AppCompatActivity {
     SmartCityClient smartCityClient;
 
 
+    AlertDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login_user);
+
+        mDialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Espere un momento")
+                .setCancelable(false).build();
 
         retrofitInit();
         findViews();
@@ -83,11 +91,14 @@ public class LoginUserActivity extends AppCompatActivity {
         startActivity(new Intent(LoginUserActivity.this, RegistroUserActivity.class));
     }
     void Login(){
+        mDialog.show();
         String email = edtEmailLogin.getText().toString();
         String pass = edtPassLogin.getText().toString();
         if(email.isEmpty()){
+            mDialog.dismiss();
             edtEmailLogin.setError("El email es requerido");
         } else if(pass.isEmpty()){
+            mDialog.dismiss();
             edtPassLogin.setError("Contraseña requerida");
         } else {
             SolicitarLogin solicitarLogin =new SolicitarLogin(email, pass);
@@ -96,17 +107,20 @@ public class LoginUserActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<RespuestaLogin> call, Response<RespuestaLogin> response) {
                     if(response.isSuccessful()){
+                        mDialog.dismiss();
                         Toast.makeText(LoginUserActivity.this, "Sesion iniciada correctamente", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(LoginUserActivity.this, InicioUserActivity.class);
                         startActivity(i);
                         finish();
                     }else{
+                        mDialog.dismiss();
                         Toast.makeText(LoginUserActivity.this, "Revise sus datos de acceso", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaLogin> call, Throwable t) {
+                    mDialog.dismiss();
                     Toast.makeText(LoginUserActivity.this, "Problemas de conexion", Toast.LENGTH_SHORT).show();
                 }
             });
