@@ -1,7 +1,9 @@
 package edu.continental.rutashyo.Retrofit;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLogin;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLoginConductor;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaRegistro;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarLogin;
+import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarLoginConductor;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarRegistro;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudCambiarPass;
 import retrofit2.Call;
@@ -13,6 +15,9 @@ public interface SmartCityService {
 
     @POST("Usuario/login.php")
     Call<RespuestaLogin> doLogin(@Body SolicitarLogin solicitarLogin);
+
+    @POST("Conductor/login.php")
+    Call<RespuestaLoginConductor> doLoginConductor(@Body SolicitarLoginConductor solicitarLoginConductor);
 
     @POST("Usuario/Insert_Usuario.php")
     Call<RespuestaRegistro> doSignUp(@Body SolicitarRegistro solicitarRegistro);
