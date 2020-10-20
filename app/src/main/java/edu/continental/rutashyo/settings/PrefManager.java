@@ -142,6 +142,5 @@ public class PrefManager {
     public boolean isFirstTimeLaunch8() {
         return pref8.getBoolean(IS_FIRST_TIME_LAUNCH8, true);
     }
-
 }
 

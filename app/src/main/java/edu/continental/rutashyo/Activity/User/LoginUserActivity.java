@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,11 +14,16 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.sql.SQLOutput;
+
 import dmax.dialog.SpotsDialog;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLogin;
 import edu.continental.rutashyo.Retrofit.SmartCityClient;
 import edu.continental.rutashyo.Retrofit.SmartCityService;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarLogin;
+import edu.continental.rutashyo.settings.AppConst;
+import edu.continental.rutashyo.settings.PrefManager;
+import edu.continental.rutashyo.settings.SharedPreferencesManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +41,7 @@ public class LoginUserActivity extends AppCompatActivity {
 
     SmartCityService smartCityService;
     SmartCityClient smartCityClient;
-
+    String emailPref;
 
     AlertDialog mDialog;
 
@@ -108,7 +115,17 @@ public class LoginUserActivity extends AppCompatActivity {
                 public void onResponse(Call<RespuestaLogin> call, Response<RespuestaLogin> response) {
                     if(response.isSuccessful()){
                         mDialog.dismiss();
-                        Toast.makeText(LoginUserActivity.this, "Sesion iniciada correctamente", Toast.LENGTH_SHORT).show();
+
+
+
+                        //guardando datos(de acuerdo a la respuesta)
+                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_USUARIO, response.body().getIDUsuario());
+                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_EMAIL, response.body().getUSEmail());
+                        SharedPreferencesManager.setSomeBooleanValue(AppConst.PREF_STATUS, response.body().getStatus());
+                        //SharedPreferencesManager.setSomeStringValue(AppConst.PREF_, response.body().getMessage());
+                        emailPref = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_EMAIL);
+                        Toast.makeText(LoginUserActivity.this, "Bienvendo: "+emailPref, Toast.LENGTH_SHORT).show();
+
                         Intent i = new Intent(LoginUserActivity.this, InicioUserActivity.class);
                         startActivity(i);
                         finish();
