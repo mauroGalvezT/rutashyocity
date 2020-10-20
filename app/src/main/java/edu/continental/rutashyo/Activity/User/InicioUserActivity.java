@@ -14,10 +14,12 @@ import androidx.fragment.app.FragmentTransaction;
 import edu.continental.rutashyo.Activity.Fragments.HomeFragment;
 import edu.continental.rutashyo.Activity.Fragments.ProfileFragment;
 import edu.continental.rutashyo.R;
+import edu.continental.rutashyo.settings.AppConst;
+import edu.continental.rutashyo.settings.PrefManager;
 
 public class InicioUserActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
-
+    //String emailPref;
     AlertDialog mDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,8 @@ public class InicioUserActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         openFragment(new HomeFragment());
+      //  emailPref = PrefManager.getSomeStringValue(AppConst.PREF_EMAIL);
+
     }
 
     public void openFragment(Fragment fragment) {
