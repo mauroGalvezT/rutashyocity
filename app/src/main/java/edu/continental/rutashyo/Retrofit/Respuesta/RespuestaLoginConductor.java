@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class RespuestaLoginConductor {
 
-    @SerializedName("Status")
+    @SerializedName("status")
     @Expose
     private Boolean status;
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("ID_CONDUCTOR")
+    @SerializedName("ID_Conductor")
     @Expose
     private String iDConductor;
     @SerializedName("CON_Email")

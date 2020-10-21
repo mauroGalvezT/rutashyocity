@@ -104,14 +104,13 @@ public class LoginConductorActivity extends AppCompatActivity {
                 public void onResponse(Call<RespuestaLoginConductor> call, retrofit2.Response<RespuestaLoginConductor> response) {
                     if(response.isSuccessful()){
                         mDialog.dismiss();
-
-                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_CONDUCTOR, response.body().getiDConductor());
                         SharedPreferencesManager.setSomeStringValue(AppConst.PREF_EMAIL, response.body().getConEmail());
+                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_CONDUCTOR, response.body().getiDConductor());
                         idPref=SharedPreferencesManager.getSomeStringValue(AppConst.PREF_ID_CONDUCTOR);
                         emailPref=SharedPreferencesManager.getSomeStringValue(AppConst.PREF_EMAIL);
 
 
-                        Toast.makeText(LoginConductorActivity.this, "Sesion iniciada correctamente"+" "+idPref+" "+emailPref, Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginConductorActivity.this, "Sesion iniciada correctamente", Toast.LENGTH_LONG).show();
                         Intent i = new Intent(LoginConductorActivity.this, RegistroVehiculoActivity.class);
                         startActivity(i);
                         finish();

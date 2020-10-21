@@ -40,6 +40,8 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
 
     AlertDialog mDialog;
 
+    String idConductor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,10 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
                 .setContext(this)
                 .setMessage("Espere un momento")
                 .setCancelable(false).build();
+
+        idConductor = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_ID_CONDUCTOR);
+
+
 
         retrofitInit();
         findViews();
@@ -80,6 +86,8 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
         input_layout_modelo=findViewById(R.id.input_layout_modelo);
         input_layout_color=findViewById(R.id.input_layout_color);
         input_layout_placa=findViewById(R.id.input_layout_placa);
+
+        edtmarca.setText("id: "+idConductor);
     }
 
     private void retrofitInit() {
@@ -163,9 +171,11 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
         String numPlaca=edtnum_placa.getText().toString();
         String iDTipoVehiculo = "1";
         String tipoVehiculo="asd";
-        String idConductor = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_ID_CONDUCTOR);
 
-        SolicitudVehiculos solicitudVehiculos=new SolicitudVehiculos(numPlaca,color,modelo,marca,iDTipoVehiculo,idConductor,tipoVehiculo);
+
+
+
+        SolicitudVehiculos solicitudVehiculos=new SolicitudVehiculos(numPlaca,color,modelo,marca,iDTipoVehiculo,tipoVehiculo,idConductor);
         Call<RespuestaVehiculo> call = smartCityService.doResVehiculo(solicitudVehiculos);
         call.enqueue(new Callback<RespuestaVehiculo>() {
             @Override
