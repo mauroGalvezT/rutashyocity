@@ -21,6 +21,9 @@ public class SolicitudVehiculos {
     @SerializedName("ID_Tipo_Vehiculo")
     @Expose
     private String iDTipoVehiculo;
+    @SerializedName("Tipo_Vehiculo")
+    @Expose
+    private String tipoVehiculo;
     @SerializedName("ID_Conductor")
     @Expose
     private String iDConductor;
@@ -41,7 +44,7 @@ public class SolicitudVehiculos {
      * @param vEHPlaca
      * @param iDTipoVehiculo
      */
-    public SolicitudVehiculos(String vEHPlaca, String vEHColor, String vEHModelo, String vEHMarca, String iDTipoVehiculo, String iDConductor) {
+    public SolicitudVehiculos(String vEHPlaca, String vEHColor, String vEHModelo, String vEHMarca, String iDTipoVehiculo, String tipoVehiculo, String iDConductor) {
         super();
         this.vEHPlaca = vEHPlaca;
         this.vEHColor = vEHColor;
@@ -49,6 +52,7 @@ public class SolicitudVehiculos {
         this.vEHMarca = vEHMarca;
         this.iDTipoVehiculo = iDTipoVehiculo;
         this.iDConductor = iDConductor;
+        this.tipoVehiculo=tipoVehiculo;
     }
 
     public String getVEHPlaca() {
@@ -99,4 +103,11 @@ public class SolicitudVehiculos {
         this.iDConductor = iDConductor;
     }
 
+    public String getTipoVehiculo() {
+        return tipoVehiculo;
+    }
+
+    public void setTipoVehiculo(String tipoVehiculo) {
+        this.tipoVehiculo = tipoVehiculo;
+    }
 }

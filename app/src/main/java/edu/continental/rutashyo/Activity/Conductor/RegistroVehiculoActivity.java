@@ -162,9 +162,10 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
         String color=edtcolor.getText().toString();
         String numPlaca=edtnum_placa.getText().toString();
         String iDTipoVehiculo = "1";
-        String idConductor = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_ID_USUARIO);
+        String tipoVehiculo="asd";
+        String idConductor = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_ID_CONDUCTOR);
 
-        SolicitudVehiculos solicitudVehiculos=new SolicitudVehiculos(numPlaca,color,modelo,marca,iDTipoVehiculo,idConductor);
+        SolicitudVehiculos solicitudVehiculos=new SolicitudVehiculos(numPlaca,color,modelo,marca,iDTipoVehiculo,idConductor,tipoVehiculo);
         Call<RespuestaVehiculo> call = smartCityService.doResVehiculo(solicitudVehiculos);
         call.enqueue(new Callback<RespuestaVehiculo>() {
             @Override
