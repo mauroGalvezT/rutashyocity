@@ -105,7 +105,7 @@ public class LoginConductorActivity extends AppCompatActivity {
                     if(response.isSuccessful()){
                         mDialog.dismiss();
 
-                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_CONDUCTOR, response.body().getiDUsuario());
+                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_CONDUCTOR, response.body().getiDConductor());
                         SharedPreferencesManager.setSomeStringValue(AppConst.PREF_EMAIL, response.body().getConEmail());
                         idPref=SharedPreferencesManager.getSomeStringValue(AppConst.PREF_ID_CONDUCTOR);
                         emailPref=SharedPreferencesManager.getSomeStringValue(AppConst.PREF_EMAIL);

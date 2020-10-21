@@ -4,24 +4,24 @@ import com.google.gson.annotations.SerializedName;
 
 public class RespuestaLoginConductor {
 
-    @SerializedName("CON_Status")
+    @SerializedName("Status")
     @Expose
     private Boolean status;
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("ID_Usuario")
+    @SerializedName("ID_CONDUCTOR")
     @Expose
-    private String iDUsuario;
+    private String iDConductor;
     @SerializedName("CON_Email")
     @Expose
     private String conEmail;
 
-    public RespuestaLoginConductor(Boolean status, String message, String iDUsuario, String conEmail) {
+    public RespuestaLoginConductor(Boolean status, String message, String iDConductor, String conEmail) {
         super();
         this.status = status;
         this.message = message;
-        this.iDUsuario = iDUsuario;
+        this.iDConductor = iDConductor;
         this.conEmail = conEmail;
     }
 
@@ -41,12 +41,12 @@ public class RespuestaLoginConductor {
         this.message = message;
     }
 
-    public String getiDUsuario() {
-        return iDUsuario;
+    public String getiDConductor() {
+        return iDConductor;
     }
 
     public void setiDUsuario(String iDUsuario) {
-        this.iDUsuario = iDUsuario;
+        this.iDConductor = iDUsuario;
     }
 
     public String getConEmail() {
