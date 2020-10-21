@@ -11,6 +11,7 @@ public class AppConst {
     public static final String PREF_EMAIL= "PREF_EMAIL";
     public static final String PREF_STATUS= "PREF_STATUS";
     public static final String PREF_ID_USUARIO= "PREF_ID_USUARIO";
+    public static final String PREF_ID_CONDUCTOR= "PREF_ID_CONDUCTOR";
 
 
 

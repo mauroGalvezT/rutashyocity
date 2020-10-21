@@ -28,7 +28,6 @@ public class SharedPreferencesManager {
         return getSharedPreferences().getString(dataLabel, null);
     }
 
-
     public static boolean getSomeBooleanValue(String dataLabel){
         return getSharedPreferences().getBoolean(dataLabel, false);
     }

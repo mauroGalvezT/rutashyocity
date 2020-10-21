@@ -2,17 +2,30 @@ package edu.continental.rutashyo.Activity.Conductor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
+import dmax.dialog.SpotsDialog;
 import edu.continental.rutashyo.Activity.User.InicioUserActivity;
+import edu.continental.rutashyo.Activity.User.RegistroUserActivity;
 import edu.continental.rutashyo.R;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaVehiculo;
+import edu.continental.rutashyo.Retrofit.SmartCityClient;
+import edu.continental.rutashyo.Retrofit.SmartCityService;
+import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudVehiculos;
+import edu.continental.rutashyo.settings.AppConst;
+import edu.continental.rutashyo.settings.SharedPreferencesManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegistroVehiculoActivity extends AppCompatActivity {
 
@@ -20,21 +33,29 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
     EditText edtmarca,edtmodelo,edtcolor,edtnum_placa;
     FloatingActionButton btnRegistrar;
     private TextInputLayout input_layout_marca,input_layout_modelo,input_layout_color,input_layout_placa;
+
+
+    SmartCityService smartCityService;
+    SmartCityClient smartCityClient;
+
+    AlertDialog mDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_vehiculo);
-        edtmarca=findViewById(R.id.edtMarca);
-        edtmodelo=findViewById(R.id.edtModelo);
-        edtcolor=findViewById(R.id.edtColor);
-        edtnum_placa=findViewById(R.id.edtNum_placa);
-        btnRegistrar=findViewById(R.id.btnRegistrar);
 
-        input_layout_marca=findViewById(R.id.input_layout_marca);
-        input_layout_modelo=findViewById(R.id.input_layout_modelo);
-        input_layout_color=findViewById(R.id.input_layout_color);
-        input_layout_placa=findViewById(R.id.input_layout_placa);
+        mDialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Espere un momento")
+                .setCancelable(false).build();
 
+        retrofitInit();
+        findViews();
+        events();
+    }
+
+    private void events() {
         btnRegistrar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -46,8 +67,26 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
             }
 
         });
-
     }
+
+    private void findViews() {
+        edtmarca=findViewById(R.id.edtMarca);
+        edtmodelo=findViewById(R.id.edtModelo);
+        edtcolor=findViewById(R.id.edtColor);
+        edtnum_placa=findViewById(R.id.edtNum_placa);
+        btnRegistrar=findViewById(R.id.btnRegistrar);
+
+        input_layout_marca=findViewById(R.id.input_layout_marca);
+        input_layout_modelo=findViewById(R.id.input_layout_modelo);
+        input_layout_color=findViewById(R.id.input_layout_color);
+        input_layout_placa=findViewById(R.id.input_layout_placa);
+    }
+
+    private void retrofitInit() {
+        smartCityClient = SmartCityClient.getInstance();
+        smartCityService = smartCityClient.getSmartCityService();
+    }
+
     private void enviarRegistro(){
         if (!validarMarca()) {
             return;
@@ -117,8 +156,37 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
     }
 
     public void registrarVehiculo(){
+        mDialog.show();
+        String marca=edtmarca.getText().toString();
+        String modelo=edtmodelo.getText().toString();
+        String color=edtcolor.getText().toString();
+        String numPlaca=edtnum_placa.getText().toString();
+        String iDTipoVehiculo = "1";
+        String idConductor = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_ID_USUARIO);
 
-        startActivity(new Intent(RegistroVehiculoActivity.this, InicioUserActivity.class));
+        SolicitudVehiculos solicitudVehiculos=new SolicitudVehiculos(numPlaca,color,modelo,marca,iDTipoVehiculo,idConductor);
+        Call<RespuestaVehiculo> call = smartCityService.doResVehiculo(solicitudVehiculos);
+        call.enqueue(new Callback<RespuestaVehiculo>() {
+            @Override
+            public void onResponse(Call<RespuestaVehiculo> call, Response<RespuestaVehiculo> response) {
+                if (response.isSuccessful()){
+                    mDialog.dismiss();
+                    Toast.makeText(RegistroVehiculoActivity.this, "Registrado correctamente", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(RegistroVehiculoActivity.this, InicioUserActivity.class);
+                    startActivity(i);
+                    finish();
+                }else{
+                    mDialog.dismiss();
+                    Toast.makeText(RegistroVehiculoActivity.this, "Revise sus datos de registro", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaVehiculo> call, Throwable t) {
+                mDialog.dismiss();
+                Toast.makeText(RegistroVehiculoActivity.this, "Problemas de conexion", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
