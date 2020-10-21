@@ -422,6 +422,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btnSveUpdateProfile"
             android:layout_width="272dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
