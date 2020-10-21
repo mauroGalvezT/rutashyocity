@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/gradientlogin"
-    tools:context=".Activity.Fragments.ProfileFragment">
+    tools:context=".Activity.Fragments.ProfilesFragment">
+
 
     <LinearLayout
         android:layout_margin="5dp"
@@ -392,7 +393,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center|left"
-                        android:hint="@string/direccion"
+                        android:hint="@string/contrasena"
                         android:selectAllOnFocus="false"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
@@ -422,13 +423,13 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnSveUpdateProfile"
+            android:id="@+id/btnSave"
             android:layout_width="272dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/white"
             android:background="@drawable/btn_background"
-            android:text="@string/guardar_cambios" />
+            android:text="@string/guardar_cambios"
+            android:textColor="@color/white" />
         <!--<View-->
         <!--android:layout_marginRight="10dp"-->
         <!--android:layout_marginLeft="80dp"-->
@@ -440,3 +441,4 @@
     </LinearLayout>
 
 </FrameLayout>
+

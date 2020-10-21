@@ -27,4 +27,6 @@ public class SmartCityClient {
     public  SmartCityService getSmartCityService(){
         return smartCityService;
     }
+
+
 }
