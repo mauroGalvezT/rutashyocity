@@ -18,9 +18,11 @@ import java.sql.SQLOutput;
 
 import dmax.dialog.SpotsDialog;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLogin;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaPerfil;
 import edu.continental.rutashyo.Retrofit.SmartCityClient;
 import edu.continental.rutashyo.Retrofit.SmartCityService;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarLogin;
+import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudPerfil;
 import edu.continental.rutashyo.settings.AppConst;
 import edu.continental.rutashyo.settings.PrefManager;
 import edu.continental.rutashyo.settings.SharedPreferencesManager;
@@ -116,8 +118,6 @@ public class LoginUserActivity extends AppCompatActivity {
                     if(response.isSuccessful()){
                         mDialog.dismiss();
 
-
-
                         //guardando datos(de acuerdo a la respuesta)
                         SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_USUARIO, response.body().getIDUsuario());
                         SharedPreferencesManager.setSomeStringValue(AppConst.PREF_EMAIL, response.body().getUSEmail());
@@ -141,6 +141,8 @@ public class LoginUserActivity extends AppCompatActivity {
                     Toast.makeText(LoginUserActivity.this, "Problemas de conexion", Toast.LENGTH_SHORT).show();
                 }
             });
+
+
         }
     }
 
