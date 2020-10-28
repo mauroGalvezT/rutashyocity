@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "945949907307-49i2rijbnk3ednmd75ghns9d2cic8852.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.continental.rutashyo",
+            "certificate_hash": "8e9f7fa41da8ecdd9911789da2fc4de04c1e9419"
+          }
+        },
+        {
           "client_id": "945949907307-88mfn7lf387b7tfmicln15f7i6lcoo7a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
