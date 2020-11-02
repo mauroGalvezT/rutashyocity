@@ -1,5 +1,6 @@
 package edu.continental.rutashyo.Activity.User;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -12,7 +13,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.sql.SQLOutput;
 
@@ -45,6 +52,11 @@ public class LoginUserActivity extends AppCompatActivity {
     SmartCityClient smartCityClient;
     String emailPref;
 
+    FirebaseAuth mAuth;
+    DatabaseReference mDatabase;
+
+    SharedPreferences mPref;
+
     AlertDialog mDialog;
 
     @Override
@@ -52,6 +64,10 @@ public class LoginUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login_user);
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mPref = getApplicationContext().getSharedPreferences("typeUser", MODE_PRIVATE);
 
         mDialog = new SpotsDialog.Builder()
                 .setContext(this)
@@ -110,6 +126,27 @@ public class LoginUserActivity extends AppCompatActivity {
             mDialog.dismiss();
             edtPassLogin.setError("Contraseña requerida");
         } else {
+
+            mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        String user = mPref.getString("user", "");
+                        if (user.equals("client")) {
+                            Intent intent = new Intent(LoginUserActivity.this, InicioUserActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
+
+                    }
+                    else {
+                        Toast.makeText(LoginUserActivity.this, "La contraseña o el password son incorrectos", Toast.LENGTH_SHORT).show();
+                    }
+                    mDialog.dismiss();
+                }
+            });
+
+            /**
             SolicitarLogin solicitarLogin =new SolicitarLogin(email, pass);
             Call<RespuestaLogin> call = smartCityService.doLogin(solicitarLogin);
             call.enqueue(new Callback<RespuestaLogin>() {
@@ -142,7 +179,7 @@ public class LoginUserActivity extends AppCompatActivity {
                 }
             });
 
-
+             **/
         }
     }
 

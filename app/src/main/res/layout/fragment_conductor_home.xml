@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity.Fragments.HomeFragment">
+    tools:context=".Activity.Conductor.ConductorHomeFragment">
 
     <RelativeLayout
         android:id="@+id/layout_main"
@@ -17,9 +17,9 @@
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-           <!-- tools:context="com.heven.taxicabondemandtaxi.uber.fragment.FragmentHome" -->
+            android:layout_height="match_parent" />
+
+        <!-- tools:context="com.heven.taxicabondemandtaxi.uber.fragment.FragmentHome" -->
 
     </RelativeLayout>
 
@@ -33,69 +33,88 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <RelativeLayout
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <fragment
-                android:layout_toStartOf="@+id/my_location"
-                android:tint="@color/colorPrimaryDark"
-                android:id="@+id/autocomplete_fragment_depart"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment" />
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/white"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <ImageView
-                android:layout_toStartOf="@+id/choose_my_location"
-                android:background="?android:selectableItemBackground"
-                android:padding="12dp"
-                android:layout_centerInParent="true"
-                app:srcCompat="@drawable/ic_my_location"
-                android:visibility="visible"
-                android:layout_marginTop="0dp"
-                android:id="@+id/my_location"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                app:tint="@color/grisGooglePlay" />
-            <ImageView
-                android:background="?android:selectableItemBackground"
-                android:padding="12dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
-                app:srcCompat="@drawable/ic_pin_2"
-                android:visibility="visible"
-                android:layout_marginTop="0dp"
-                android:id="@+id/choose_my_location"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                app:tint="@color/grisGooglePlay" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:orientation="horizontal">
-            <fragment
-                android:layout_toStartOf="@+id/choose_my_location_destination"
-                android:tint="@color/primaryLightColor"
-                android:id="@+id/autocomplete_fragment_arrivee"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
 
-            <ImageView
-                android:background="?android:selectableItemBackground"
-                android:padding="12dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
-                app:srcCompat="@drawable/ic_pin_2"
-                android:visibility="visible"
-                android:layout_marginTop="0dp"
-                android:id="@+id/choose_my_location_destination"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                app:tint="@color/primaryDarkColor" />
-        </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/imageViewToolbarPhoto"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:contentDescription="@string/perfil"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+
+                    <TextView
+                        android:id="@+id/textViewToolbar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/toolbar_title_home"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageViewToolbarPhoto"
+                        app:layout_constraintStart_toEndOf="@+id/imageViewToolbarPhoto"
+                        app:layout_constraintTop_toTopOf="@+id/imageViewToolbarPhoto" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_statut"
+                        android:theme="@style/SCBSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:background="?android:selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_weight="9"
+                        android:text=""
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/btnConnect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Conectar"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/switch_statut"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+
+            android:backgroundTint="@color/colorPrimaryDark"/>
     </LinearLayout>
 
     <ImageView

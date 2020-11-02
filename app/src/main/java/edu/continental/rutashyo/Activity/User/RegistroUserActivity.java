@@ -1,5 +1,6 @@
 package edu.continental.rutashyo.Activity.User;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -12,8 +13,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 import dmax.dialog.SpotsDialog;
@@ -22,13 +27,17 @@ import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaRegistro;
 import edu.continental.rutashyo.Retrofit.SmartCityClient;
 import edu.continental.rutashyo.Retrofit.SmartCityService;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarRegistro;
+import edu.continental.rutashyo.model.Client;
+import edu.continental.rutashyo.providers.AuthProvider;
+import edu.continental.rutashyo.providers.ClientProvider;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
 public class RegistroUserActivity extends AppCompatActivity{
-
+    AuthProvider mAuthProvider;
+    ClientProvider mClientProvider;
     private String valNombre, valApelido, valTelefono, val_Email, valPass,valPassConf;
     EditText edtNombre, edtApellido, edtTelefono, edtEmail, edtPass, edtPassConf;
     FloatingActionButton btnEnviarRegistro;
@@ -251,18 +260,23 @@ el layout no tenra limites
 
 
     public void crearUser(){
-        mDialog.show();
-        String name = edtNombre.getText().toString();
-        String apellido = edtApellido.getText().toString();
-        String telefono = edtTelefono.getText().toString();
-        String email = edtEmail.getText().toString();
+        //mDialog.show();
+        final String name = edtNombre.getText().toString();
+        final String apellido = edtApellido.getText().toString();
+        final String telefono = edtTelefono.getText().toString();
+        final String email = edtEmail.getText().toString();
 
         String direccion = "null";
         String nacimiento = "null";
-        String pass = edtPass.getText().toString();
+        final String pass = edtPass.getText().toString();
         String userTipo = "Cliente";
         String nacionalidad = "PERU";
 
+        mDialog.show();
+        register(name, apellido,telefono,email, pass);
+
+
+/*
             SolicitarRegistro solicitarRegistro =new SolicitarRegistro(name,apellido,direccion,nacimiento,nacionalidad,telefono, email, pass, userTipo);
             Call<RespuestaRegistro> call = smartCityService.doSignUp(solicitarRegistro);
             call.enqueue(new Callback<RespuestaRegistro>() {
@@ -286,7 +300,39 @@ el layout no tenra limites
                     Toast.makeText(RegistroUserActivity.this, "Problemas de conexion", Toast.LENGTH_SHORT).show();
                 }
             });
+*/
+    }
+    void register(final String name, final String apellido, final String telefono, final String email, String password) {
+        mAuthProvider.register(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                mDialog.hide();
+                if (task.isSuccessful()) {
+                    String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    Client client = new Client(id, name,apellido ,telefono ,email);
+                    create(client);
+                }
+                else {
+                    Toast.makeText(RegistroUserActivity.this, "No se pudo registrar el usuario", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
+    void create(Client client) {
+        mClientProvider.create(client).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Intent intent = new Intent(RegistroUserActivity.this, InicioUserActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(RegistroUserActivity.this, "No se pudo crear el cliente", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 

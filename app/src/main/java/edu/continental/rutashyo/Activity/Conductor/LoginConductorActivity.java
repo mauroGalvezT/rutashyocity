@@ -1,10 +1,12 @@
 package edu.continental.rutashyo.Activity.Conductor;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -17,7 +19,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONObject;
 
@@ -40,10 +48,12 @@ public class LoginConductorActivity extends AppCompatActivity {
     String valEmailLogin, valPassLogin;
     FloatingActionButton btnIniciarSesion;
     TextView txtRecuperarPass;
+    SharedPreferences mPref;
 
     SmartCityService smartCityService;
     SmartCityClient smartCityClient;
-
+    FirebaseAuth mAuth;
+    DatabaseReference mDatabase;
     AlertDialog mDialog;
 
     String idPref;
@@ -53,7 +63,9 @@ public class LoginConductorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_conductor);
-
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mPref = getApplicationContext().getSharedPreferences("typeUser", MODE_PRIVATE);
         mDialog = new SpotsDialog.Builder()
                 .setContext(this)
                 .setMessage("Espere un momento")
@@ -97,6 +109,26 @@ public class LoginConductorActivity extends AppCompatActivity {
             mDialog.dismiss();
             edtPassLogin.setError("Contraseña requerida");
         } else {
+
+            mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        String user = mPref.getString("user", "");
+                        if (user.equals("driver")) {
+                            Intent intent = new Intent(LoginConductorActivity.this, ConductorMapActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
+
+                    }
+                    else {
+                        Toast.makeText(LoginConductorActivity.this, "La contraseña o el password son incorrectos", Toast.LENGTH_SHORT).show();
+                    }
+                    mDialog.dismiss();
+                }
+            });
+            /*
             SolicitarLoginConductor solicitarLoginconductor =new SolicitarLoginConductor(email, pass);
             Call<RespuestaLoginConductor> call = smartCityService.doLoginConductor(solicitarLoginconductor);
             call.enqueue(new Callback<RespuestaLoginConductor>() {
@@ -126,6 +158,8 @@ public class LoginConductorActivity extends AppCompatActivity {
                     Toast.makeText(LoginConductorActivity.this, "Problemas de conexion", Toast.LENGTH_SHORT).show();
                 }
             });
+            */
+
         }
     }
 

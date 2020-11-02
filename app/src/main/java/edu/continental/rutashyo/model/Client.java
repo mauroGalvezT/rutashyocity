@@ -1,17 +1,18 @@
 package edu.continental.rutashyo.model;
 
-public class user {
+public class Client {
 
     String id;
     String name;
+    String apellido;
+    String telefono;
     String email;
 
-    public user() {
-    }
-
-    public user(String id, String name, String email) {
+    public Client(String id, String name, String apellido, String telefono, String email) {
         this.id = id;
         this.name = name;
+        this.apellido = apellido;
+        this.telefono = telefono;
         this.email = email;
     }
 
@@ -29,6 +30,22 @@ public class user {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public String getEmail() {
