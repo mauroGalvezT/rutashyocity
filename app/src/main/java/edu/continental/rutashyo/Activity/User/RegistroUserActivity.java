@@ -17,8 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.auth.AuthResult;
+//import com.google.firebase.auth.FirebaseAuth;
 
 
 import dmax.dialog.SpotsDialog;
@@ -273,10 +273,10 @@ el layout no tenra limites
         String nacionalidad = "PERU";
 
         mDialog.show();
-        register(name, apellido,telefono,email, pass);
+        //register(name, apellido,telefono,email, pass);
 
 
-/*
+
             SolicitarRegistro solicitarRegistro =new SolicitarRegistro(name,apellido,direccion,nacimiento,nacionalidad,telefono, email, pass, userTipo);
             Call<RespuestaRegistro> call = smartCityService.doSignUp(solicitarRegistro);
             call.enqueue(new Callback<RespuestaRegistro>() {
@@ -300,9 +300,10 @@ el layout no tenra limites
                     Toast.makeText(RegistroUserActivity.this, "Problemas de conexion", Toast.LENGTH_SHORT).show();
                 }
             });
-*/
+
     }
-    void register(final String name, final String apellido, final String telefono, final String email, String password) {
+    /*
+    void register(final String nombre, final String apellido, final String telefono, final String email, String password) {
         mAuthProvider.register(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -336,5 +337,96 @@ el layout no tenra limites
     }
 
 
+    private class createUser extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String url = Server_url+"signup.php";
+            StringRequest jsonObjReq = new StringRequest(Request.Method.POST,
+                    url,
+                    new Response.Listener<String>() {
+
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                progressBar_subs.setVisibility(View.INVISIBLE);
+                                JSONObject json = new JSONObject(response);
+                                JSONObject msg = json.getJSONObject("status");
+                                String etat = msg.getString("message");
+                                if(etat.equals("1")){
+                                    JSONObject user = json.getJSONObject("user");
+
+                                    phone_subs.setText("");
+                                    password_subs.setText("");
+                                    password_conf.setText("");
+                                    firstname_subs.setText("");
+                                    email_insc.setText("");
+//                                    Toast.makeText(context, "Successfully completed", Toast.LENGTH_SHORT).show();
+                                        saveProfile(new User(user.getString("id"),user.getString("nom"),user.getString("prenom"),user.getString("phone")
+                                                ,user.getString("email"),user.getString("statut"),user.getString("login_type"),user.getString("tonotify"),user.getString("device_id"),
+                                                user.getString("fcm_id"),user.getString("creer"),user.getString("modifier"),user.getString("photo_path"),user.getString("user_cat"),"",user.getString("currency")
+                                                ,"","" ,"","","","","",user.getString("country")));
+
+
+//                                    phone_subs.setText(phone);
+//                                    Connexion.input_phone.setText(user.getString("phone"));
+                                    launchHomeScreen();
+                                }else if(etat.equals("2")){
+                                    Toast.makeText(context, "Este numero ya existe", Toast.LENGTH_SHORT).show();
+                                    requestFocus(phone_subs);
+                                    input_layout_phone_subs.setError("Ingrese otro numero");
+                                }else
+                                    Toast.makeText(context, "Failure to register", Toast.LENGTH_SHORT).show();
+
+                            } catch (JSONException e) {
+
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    progressBar_subs.setVisibility(View.INVISIBLE);
+                    Toast.makeText(context, "Error "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }) {
+
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("firstname", val_firstname_subs);
+                    params.put("phone", val_phone_subs);
+                    params.put("password", val_password_subs);
+                    params.put("email", val_email_subs);
+                    params.put("account_type", account_type);
+                    params.put("login_type", "phone");
+                    params.put("tonotify", "yes");
+                    return params;
+                }
+
+            };
+            AppController.getInstance().addToRequestQueue(jsonObjReq);
+            jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                    10000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //to add spacing between cards
+            if (this != null) {
+
+            }
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+    }
+*/
 
 }
