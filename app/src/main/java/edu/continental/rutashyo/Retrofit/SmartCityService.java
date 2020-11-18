@@ -25,7 +25,7 @@ import retrofit2.http.POST;
 public interface SmartCityService {
 
 
-    @POST("api/auth/login")
+    @POST("smartcityhyo.tk/movurbana/api/auth/login")
     Call<RespuestaLogin> doLogin(@Body SolicitarLogin solicitarLogin);
 
     @POST("Conductor/login.php")
