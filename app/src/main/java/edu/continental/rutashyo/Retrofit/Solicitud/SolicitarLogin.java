@@ -6,45 +6,45 @@ import com.google.gson.annotations.SerializedName;
 
 public class SolicitarLogin {
 
-    @SerializedName("US_Email")
+    @SerializedName("usuario")
     @Expose
-    private String uSEmail;
-    @SerializedName("US_Contrasena")
+    private String usuario;
+    @SerializedName("password")
     @Expose
-    private String uSContrasena;
+    private String password;
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public SolicitarLogin() {
     }
 
     /**
-     * 
-     * @param uSContrasena
-     * @param uSEmail
+     *
+     * @param password
+     * @param usuario
      */
-    public SolicitarLogin(String uSEmail, String uSContrasena) {
+    public SolicitarLogin(String usuario, String password) {
         super();
-        this.uSEmail = uSEmail;
-        this.uSContrasena = uSContrasena;
+        this.usuario = usuario;
+        this.password = password;
     }
 
-    public String getUSEmail() {
-        return uSEmail;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setUSEmail(String uSEmail) {
-        this.uSEmail = uSEmail;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public String getUSContrasena() {
-        return uSContrasena;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUSContrasena(String uSContrasena) {
-        this.uSContrasena = uSContrasena;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

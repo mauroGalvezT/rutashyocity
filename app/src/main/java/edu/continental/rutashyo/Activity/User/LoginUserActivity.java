@@ -156,11 +156,13 @@ public class LoginUserActivity extends AppCompatActivity {
                         mDialog.dismiss();
 
                         //guardando datos(de acuerdo a la respuesta)
-                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_USUARIO, response.body().getIDUsuario());
-                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_EMAIL, response.body().getUSEmail());
+                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_USUARIO, response.body().getIdUser());
+                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_USERTOKEN, response.body().getToken());
+                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_USUARIO, response.body().getIdUser());
                         SharedPreferencesManager.setSomeBooleanValue(AppConst.PREF_STATUS, response.body().getStatus());
+
                         //SharedPreferencesManager.setSomeStringValue(AppConst.PREF_, response.body().getMessage());
-                        emailPref = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_EMAIL);
+                        String emailPref = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_USERTOKEN);
                         Toast.makeText(LoginUserActivity.this, "Bienvendo: "+emailPref, Toast.LENGTH_SHORT).show();
 
                         Intent i = new Intent(LoginUserActivity.this, InicioUserActivity.class);

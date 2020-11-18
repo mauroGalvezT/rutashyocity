@@ -88,4 +88,19 @@ dependencies {
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
 
 }
+apply plugin: "org.sonarqube"
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "Rutas transporte"
+        property "sonar.projectKey", "edu.continental.rutashyo"
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.language", "java"
+        property "sonar.sources", "src/main/"
+        property "sonar.login", "admin"
+        property "sonar.password", "admin"
+    }
+}
+
 apply plugin: 'com.google.gms.google-services'
+

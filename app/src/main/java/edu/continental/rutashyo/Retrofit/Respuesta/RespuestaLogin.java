@@ -9,36 +9,36 @@ public class RespuestaLogin {
     @SerializedName("status")
     @Expose
     private Boolean status;
-    @SerializedName("message")
+    @SerializedName("id_user")
     @Expose
-    private String message;
-    @SerializedName("ID_Usuario")
+    private String idUser;
+    @SerializedName("estado")
     @Expose
-    private String iDUsuario;
-    @SerializedName("US_Email")
+    private String estado;
+    @SerializedName("token")
     @Expose
-    private String uSEmail;
+    private String token;
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public RespuestaLogin() {
     }
 
     /**
-     * 
-     * @param uSEmail
-     * @param message
-     * @param iDUsuario
+     *
+     * @param idUser
+     * @param estado
      * @param status
+     * @param token
      */
-    public RespuestaLogin(Boolean status, String message, String iDUsuario, String uSEmail) {
+    public RespuestaLogin(Boolean status, String idUser, String estado, String token) {
         super();
         this.status = status;
-        this.message = message;
-        this.iDUsuario = iDUsuario;
-        this.uSEmail = uSEmail;
+        this.idUser = idUser;
+        this.estado = estado;
+        this.token = token;
     }
 
     public Boolean getStatus() {
@@ -49,28 +49,28 @@ public class RespuestaLogin {
         this.status = status;
     }
 
-    public String getMessage() {
-        return message;
+    public String getIdUser() {
+        return idUser;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
-    public String getIDUsuario() {
-        return iDUsuario;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setIDUsuario(String iDUsuario) {
-        this.iDUsuario = iDUsuario;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
-    public String getUSEmail() {
-        return uSEmail;
+    public String getToken() {
+        return token;
     }
 
-    public void setUSEmail(String uSEmail) {
-        this.uSEmail = uSEmail;
+    public void setToken(String token) {
+        this.token = token;
     }
 
 }
