@@ -15,7 +15,7 @@ import retrofit2.http.POST;
 public interface SmartCityService {
 
 
-    @POST("Usuario/login.php")
+    @POST("api/auth/login")
     Call<RespuestaLogin> doLogin(@Body SolicitarLogin solicitarLogin);
 
     @POST("Usuario/Insert_Usuario.php")

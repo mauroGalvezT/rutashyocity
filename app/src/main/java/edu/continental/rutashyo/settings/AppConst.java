@@ -1,7 +1,7 @@
 package edu.continental.rutashyo.settings;
 
 public class AppConst {
-    public static final String Server_url ="https://smartcityhuancayo.herokuapp.com/";
+    public static final String Server_url ="http://192.168.1.60/smarcityHyo/";
     public static final String Server_url_user ="http://smartcityhuancayo.herokuapp.com/Usuario/";
     public static final String Registro="Insert_Usuario.php?";
     public static final String Login="login.php?";
@@ -12,6 +12,7 @@ public class AppConst {
     public static final String PREF_USERTELEFONO = "PREF_USERTELEFONO";
     public static final String PREF_USEREMAIL = "PREF_USEREMAIL";
     public static final String PREF_USERDIRECCION = "PREF_USERDIRECCION";
+    public static final String PREF_USERTOKEN = "PREF_USERTOKEN";
 
 
 
