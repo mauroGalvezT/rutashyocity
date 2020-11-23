@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,11 +113,18 @@ import java.util.Map;
 
 import static android.content.Context.LOCATION_SERVICE;
 
+import dmax.dialog.SpotsDialog;
 import edu.continental.rutashyo.R;
 //import edu.continental.rutashyo.direcciones.FetchURL;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaRegistro;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaVehiculo;
+import edu.continental.rutashyo.Retrofit.SmartCityClient;
+import edu.continental.rutashyo.Retrofit.SmartCityService;
+import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudCambiarEstado;
 import edu.continental.rutashyo.controller.AppController;
 import edu.continental.rutashyo.settings.AppConst;
 import edu.continental.rutashyo.settings.ConnectionDetector;
+import edu.continental.rutashyo.settings.SharedPreferencesManager;
 
 
 public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
@@ -125,7 +133,8 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
         GoogleMap.OnMyLocationButtonClickListener,
         RoutingListener{
 
-
+    SmartCityService smartCityService;
+    SmartCityClient smartCityClient;
     ViewPager pager;
     TabLayout tabs;
     View view;
@@ -202,12 +211,15 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
     private boolean mIsConnect = false;
     private LocationRequest mLocationRequest;
     private FusedLocationProviderClient mFusedLocation;
-
+    android.app.AlertDialog mDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        mDialog = new SpotsDialog.Builder()
+                .setContext(getContext())
+                .setMessage("Espere un momento")
+                .setCancelable(false).build();
 
         setHasOptionsMenu(true);
         if (getArguments() != null)
@@ -227,7 +239,7 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
 
         activity = (Activity)view.getContext();
         connectionDetector = new ConnectionDetector(context);
-        switch_statut = (SwitchCompat) view.findViewById(R.id.switch_statut);
+        switch_statut =  view.findViewById(R.id.switch_statut);
 
         layout_main = (RelativeLayout) view.findViewById(R.id.layout_main);
         btn_my_request =(ImageView) view.findViewById(R.id.btn_my_request);
@@ -304,11 +316,19 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
             @Override
             public void onClick(View view) {
                 if(switch_statut.isChecked()) {
-                    //  M.showLoadingDialog(context);
-                    new changerStatut().execute("yes");
+                    Toast.makeText(getContext(), "Activo", Toast.LENGTH_SHORT).show();
+                    mDialog.show();
+                    String token = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_USERTOKEN);
+                    String estado = "yes";
+                    SolicitudCambiarEstado solicitudCambiarEstado = new SolicitudCambiarEstado(token, estado);
+                    Call<RespuestaVehiculo> call = smartCityService.doUpdateStatus(solicitudCambiarEstado);
+
+
                 }else {
+                    Toast.makeText(getContext(), "No activo", Toast.LENGTH_SHORT).show();
+
                     // M.showLoadingDialog(context);
-                    new changerStatut().execute("no");
+                    //new changerStatut().execute("no");
                 }
             }
         });

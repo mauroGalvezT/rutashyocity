@@ -13,6 +13,7 @@ import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaVehiculo;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarLogin;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarLoginConductor;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarRegistro;
+import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudCambiarEstado;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudCambiarPass;
 
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudVehiculos;
@@ -52,5 +53,7 @@ public interface SmartCityService {
     @POST("Usuario/Update_Usuario.php")
     Call<RespuestaRegistro> doUpdateProfile(@Body SolicitudUpdatePerfil solicitudUpdatePerfil);
 
+    @POST("smartcityhyo.tk/movurbana/api/driver/cambiarestado")
+    Call<RespuestaVehiculo> doUpdateStatus(@Body SolicitudCambiarEstado solicitudCambiarEstado);
 
 }
