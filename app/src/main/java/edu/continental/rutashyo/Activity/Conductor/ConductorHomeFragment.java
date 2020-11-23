@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
-import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,8 +58,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.Response;
+
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.directions.route.Route;
@@ -104,6 +102,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -125,6 +124,10 @@ import edu.continental.rutashyo.controller.AppController;
 import edu.continental.rutashyo.settings.AppConst;
 import edu.continental.rutashyo.settings.ConnectionDetector;
 import edu.continental.rutashyo.settings.SharedPreferencesManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 
 public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
@@ -224,6 +227,14 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
         setHasOptionsMenu(true);
         if (getArguments() != null)
             currpos = getArguments().getInt("tab_pos", 0);
+        retrofitInit();
+    }
+
+    private void retrofitInit() {
+
+            smartCityClient = SmartCityClient.getInstance();
+            smartCityService = smartCityClient.getSmartCityService();
+
     }
 
 
@@ -316,19 +327,58 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
             @Override
             public void onClick(View view) {
                 if(switch_statut.isChecked()) {
-                    Toast.makeText(getContext(), "Activo", Toast.LENGTH_SHORT).show();
                     mDialog.show();
                     String token = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_USERTOKEN);
                     String estado = "yes";
+
                     SolicitudCambiarEstado solicitudCambiarEstado = new SolicitudCambiarEstado(token, estado);
                     Call<RespuestaVehiculo> call = smartCityService.doUpdateStatus(solicitudCambiarEstado);
+                    call.enqueue(new Callback<RespuestaVehiculo>() {
+                        @Override
+                        public void onResponse(Call<RespuestaVehiculo> call, Response<RespuestaVehiculo> response) {
+                            if(response.isSuccessful()){
+                                mDialog.dismiss();
+                                Toast.makeText(getContext(), "Activo", Toast.LENGTH_SHORT).show();
 
+                            }else{
+                                mDialog.dismiss();
+                                Toast.makeText(getContext(), "algo paso", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<RespuestaVehiculo> call, Throwable t) {
+                            mDialog.dismiss();
+                            Toast.makeText(getActivity(), "Problemas de conexion", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
 
                 }else {
-                    Toast.makeText(getContext(), "No activo", Toast.LENGTH_SHORT).show();
+                    mDialog.show();
+                    String token = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_USERTOKEN);
+                    String estado = "no";
+                    SolicitudCambiarEstado solicitudCambiarEstado = new SolicitudCambiarEstado(token, estado);
+                    Call<RespuestaVehiculo> call = smartCityService.doUpdateStatus(solicitudCambiarEstado);
+                    call.enqueue(new Callback<RespuestaVehiculo>() {
+                        @Override
+                        public void onResponse(Call<RespuestaVehiculo> call, Response<RespuestaVehiculo> response) {
+                            if(response.isSuccessful()){
+                                mDialog.dismiss();
+                                Toast.makeText(getContext(), "No activo", Toast.LENGTH_SHORT).show();
 
-                    // M.showLoadingDialog(context);
-                    //new changerStatut().execute("no");
+                            }else{
+                            mDialog.dismiss();
+                            Toast.makeText(getContext(), "algo paso", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<RespuestaVehiculo> call, Throwable t) {
+
+                        }
+                    });
+
                 }
             }
         });
@@ -336,83 +386,7 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
         return view;
     }
 
-    private class changerStatut extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            String url = AppConst.Server_url+"change_statut.php";
-            final String online = params[0];
-            StringRequest jsonObjReq = new StringRequest(Request.Method.POST,
-                    url,
-                    new Response.Listener<String>() {
 
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                //M.hideLoadingDialog();
-                                JSONObject json = new JSONObject(response);
-                                JSONObject msg = json.getJSONObject("msg");
-                                String etat = msg.getString("etat");
-                                String online = msg.getString("online");
-                                if(etat.equals("1")){
-                                    if(online.equals("yes")) {
-                                        switch_statut.setChecked(true);
-                                        // statut_conducteur.setText("enabled");
-                                        //    M.setStatutConducteur(online,context);
-                                    }else {
-                                        switch_statut.setChecked(false);
-                                        // statut_conducteur.setText("disabled");
-                                        // M.setStatutConducteur(online,context);
-                                    }
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // M.hideLoadingDialog();
-                    if(switch_statut.isChecked())
-                        switch_statut.setChecked(false);
-                    else
-                        switch_statut.setChecked(true);
-                }
-            }) {
-
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    //  params.put("id_driver", M.getID(context));
-                    params.put("online", online);
-                    return params;
-                }
-
-            };
-            AppController.getInstance().addToRequestQueue(jsonObjReq);
-            jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
-                    10000,
-                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            //to add spacing between cards
-            if (this != null) {
-
-            }
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-
-        }
-    }
 
 /*
     private static String getUrl(LatLng origin, LatLng dest, String directionMode) {
