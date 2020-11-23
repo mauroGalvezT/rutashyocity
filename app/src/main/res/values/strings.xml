@@ -57,6 +57,7 @@
     <string name="se_te_olvido_la_contasena">Se te olvido la Contaseña</string>
     <string name="cambiar_contrasena">Cambiar Contraseña</string>
     <string name="recuperar_constrasena">Recuperar Constraseña</string>
+    <string name="seleccione_su_tipo_de_vehiculo">Seleccione su tipo de vehiculo</string>
 
 
 </resources>

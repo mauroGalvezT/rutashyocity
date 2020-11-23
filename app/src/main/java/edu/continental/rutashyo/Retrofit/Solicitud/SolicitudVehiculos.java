@@ -1,4 +1,3 @@
-
 package edu.continental.rutashyo.Retrofit.Solicitud;
 
 import com.google.gson.annotations.Expose;
@@ -6,108 +5,97 @@ import com.google.gson.annotations.SerializedName;
 
 public class SolicitudVehiculos {
 
-    @SerializedName("VEH_Placa")
+    @SerializedName("token")
     @Expose
-    private String vEHPlaca;
-    @SerializedName("VEH_Color")
+    private String token;
+    @SerializedName("placa")
     @Expose
-    private String vEHColor;
-    @SerializedName("VEH_Modelo")
+    private String placa;
+    @SerializedName("color")
     @Expose
-    private String vEHModelo;
-    @SerializedName("VEH_Marca")
+    private String color;
+    @SerializedName("modelo")
     @Expose
-    private String vEHMarca;
-    @SerializedName("ID_Tipo_Vehiculo")
+    private String modelo;
+    @SerializedName("marca")
     @Expose
-    private String iDTipoVehiculo;
-    @SerializedName("Tipo_Vehiculo")
+    private String marca;
+    @SerializedName("idTipoVehiculo")
     @Expose
-    private String tipoVehiculo;
-    @SerializedName("ID_Conductor")
-    @Expose
-    private String iDConductor;
+    private String idTipoVehiculo;
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public SolicitudVehiculos() {
     }
 
     /**
-     * 
-     * @param iDConductor
-     * @param vEHModelo
-     * @param vEHColor
-     * @param vEHMarca
-     * @param vEHPlaca
-     * @param iDTipoVehiculo
+     *
+     * @param idTipoVehiculo
+     * @param marca
+     * @param color
+     * @param modelo
+     * @param token
+     * @param placa
      */
-    public SolicitudVehiculos(String vEHPlaca, String vEHColor, String vEHModelo, String vEHMarca, String iDTipoVehiculo, String tipoVehiculo, String iDConductor) {
+    public SolicitudVehiculos(String token, String placa, String color, String modelo, String marca, String idTipoVehiculo) {
         super();
-        this.vEHPlaca = vEHPlaca;
-        this.vEHColor = vEHColor;
-        this.vEHModelo = vEHModelo;
-        this.vEHMarca = vEHMarca;
-        this.iDTipoVehiculo = iDTipoVehiculo;
-        this.iDConductor = iDConductor;
-        this.tipoVehiculo=tipoVehiculo;
+        this.token = token;
+        this.placa = placa;
+        this.color = color;
+        this.modelo = modelo;
+        this.marca = marca;
+        this.idTipoVehiculo = idTipoVehiculo;
     }
 
-    public String getVEHPlaca() {
-        return vEHPlaca;
+    public String getToken() {
+        return token;
     }
 
-    public void setVEHPlaca(String vEHPlaca) {
-        this.vEHPlaca = vEHPlaca;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    public String getVEHColor() {
-        return vEHColor;
+    public String getPlaca() {
+        return placa;
     }
 
-    public void setVEHColor(String vEHColor) {
-        this.vEHColor = vEHColor;
+    public void setPlaca(String placa) {
+        this.placa = placa;
     }
 
-    public String getVEHModelo() {
-        return vEHModelo;
+    public String getColor() {
+        return color;
     }
 
-    public void setVEHModelo(String vEHModelo) {
-        this.vEHModelo = vEHModelo;
+    public void setColor(String color) {
+        this.color = color;
     }
 
-    public String getVEHMarca() {
-        return vEHMarca;
+    public String getModelo() {
+        return modelo;
     }
 
-    public void setVEHMarca(String vEHMarca) {
-        this.vEHMarca = vEHMarca;
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
     }
 
-    public String getIDTipoVehiculo() {
-        return iDTipoVehiculo;
+    public String getMarca() {
+        return marca;
     }
 
-    public void setIDTipoVehiculo(String iDTipoVehiculo) {
-        this.iDTipoVehiculo = iDTipoVehiculo;
+    public void setMarca(String marca) {
+        this.marca = marca;
     }
 
-    public String getIDConductor() {
-        return iDConductor;
+    public String getIdTipoVehiculo() {
+        return idTipoVehiculo;
     }
 
-    public void setIDConductor(String iDConductor) {
-        this.iDConductor = iDConductor;
+    public void setIdTipoVehiculo(String idTipoVehiculo) {
+        this.idTipoVehiculo = idTipoVehiculo;
     }
 
-    public String getTipoVehiculo() {
-        return tipoVehiculo;
-    }
-
-    public void setTipoVehiculo(String tipoVehiculo) {
-        this.tipoVehiculo = tipoVehiculo;
-    }
 }

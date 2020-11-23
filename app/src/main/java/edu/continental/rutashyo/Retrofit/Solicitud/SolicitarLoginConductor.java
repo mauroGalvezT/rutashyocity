@@ -1,34 +1,49 @@
 package edu.continental.rutashyo.Retrofit.Solicitud;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 public class SolicitarLoginConductor {
 
-    @SerializedName("CON_Email")
+    @SerializedName("usuario")
     @Expose
-    private String conEmail;
-    @SerializedName("CON_Contrasena")
+    private String usuario;
+    @SerializedName("password")
     @Expose
-    private String conContrasena;
+    private String password;
 
-    public SolicitarLoginConductor(String conEmail, String conContrasena) {
+    /**
+     * No args constructor for use in serialization
+     *
+     */
+    public SolicitarLoginConductor() {
+    }
+
+    /**
+     *
+     * @param password
+     * @param usuario
+     */
+    public SolicitarLoginConductor(String usuario, String password) {
         super();
-        this.setConEmail(conEmail);
-        this.setConContrasena(conContrasena);
+        this.usuario = usuario;
+        this.password = password;
     }
 
-    public String getConEmail() {
-        return conEmail;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setConEmail(String conEmail) {
-        this.conEmail = conEmail;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public String getConContrasena() {
-        return conContrasena;
+    public String getPassword() {
+        return password;
     }
 
-    public void setConContrasena(String conContrasena) {
-        this.conContrasena = conContrasena;
+    public void setPassword(String password) {
+        this.password = password;
     }
+
 }

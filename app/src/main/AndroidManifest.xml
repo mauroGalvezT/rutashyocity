@@ -32,6 +32,7 @@
 
         <activity
             android:name=".Activity.Conductor.RegistroVehiculoActivity"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.User.InicioUserActivity"

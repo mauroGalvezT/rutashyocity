@@ -7,16 +7,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dmax.dialog.SpotsDialog;
 import edu.continental.rutashyo.Activity.User.InicioUserActivity;
 import edu.continental.rutashyo.Activity.User.RegistroUserActivity;
 import edu.continental.rutashyo.R;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaTipoVehiculo;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaVehiculo;
 import edu.continental.rutashyo.Retrofit.SmartCityClient;
 import edu.continental.rutashyo.Retrofit.SmartCityService;
@@ -33,6 +41,7 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
     EditText edtmarca,edtmodelo,edtcolor,edtnum_placa;
     FloatingActionButton btnRegistrar;
     private TextInputLayout input_layout_marca,input_layout_modelo,input_layout_color,input_layout_placa;
+    Spinner tipoVehiculosSpinner;
 
 
     SmartCityService smartCityService;
@@ -41,6 +50,10 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
     AlertDialog mDialog;
 
     String idConductor;
+
+    String mTipoVehic;
+    List<RespuestaTipoVehiculo> tipVehic = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +71,54 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
 
         retrofitInit();
         findViews();
+
+        final ArrayAdapter<RespuestaTipoVehiculo> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,tipVehic);
+        Call<List<RespuestaTipoVehiculo>> calls = smartCityService.getTipoVehiculos();
+        calls.enqueue(new Callback<List<RespuestaTipoVehiculo>>() {
+            @Override
+            public void onResponse(Call<List<RespuestaTipoVehiculo>> call, Response<List<RespuestaTipoVehiculo>> response) {
+                if(response.isSuccessful()){
+                    for(RespuestaTipoVehiculo post : response.body()){
+                        String id = post.getIDTipoVehiculo();
+                        String name = post.getTVNombre();
+                        RespuestaTipoVehiculo tVNombre = new RespuestaTipoVehiculo(name);
+                        RespuestaTipoVehiculo iDTipoVehiculo = new RespuestaTipoVehiculo(id);
+                        tipVehic.add(new RespuestaTipoVehiculo(id, name));
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        tipoVehiculosSpinner.setAdapter(adapter);
+
+
+                        tipoVehiculosSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
+                                //mTipoVehic = parent.getItemAtPosition(i).toString();
+                                mTipoVehic = tipVehic.get(i).getIDTipoVehiculo();
+
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RespuestaTipoVehiculo>> call, Throwable t) {
+
+            }
+        });
+
+
         events();
+    }
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Registre su vehiculo porfavor", Toast.LENGTH_SHORT).show();
+
     }
 
     private void events() {
@@ -69,6 +129,7 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
                 valmodelo=edtmodelo.getText().toString();
                 valcolor=edtcolor.getText().toString();
                 valplaca=edtnum_placa.getText().toString();
+
                 enviarRegistro();
             }
 
@@ -86,8 +147,16 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
         input_layout_modelo=findViewById(R.id.input_layout_modelo);
         input_layout_color=findViewById(R.id.input_layout_color);
         input_layout_placa=findViewById(R.id.input_layout_placa);
+        tipoVehiculosSpinner = findViewById(R.id.spinnerVehiculos);
 
-        edtmarca.setText("id: "+idConductor);
+        spinnerTipoVehiculos();
+
+
+
+    }
+
+    private void spinnerTipoVehiculos() {
+
     }
 
     private void retrofitInit() {
@@ -165,17 +234,14 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
 
     public void registrarVehiculo(){
         mDialog.show();
-        String marca=edtmarca.getText().toString();
-        String modelo=edtmodelo.getText().toString();
-        String color=edtcolor.getText().toString();
+        String token = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_USERTOKEN);
         String numPlaca=edtnum_placa.getText().toString();
-        String iDTipoVehiculo = "1";
-        String tipoVehiculo="asd";
+        String color=edtcolor.getText().toString();
+        String modelo=edtmodelo.getText().toString();
+        String marca=edtmarca.getText().toString();
 
+        SolicitudVehiculos solicitudVehiculos=new SolicitudVehiculos(token,numPlaca,color,modelo,marca,mTipoVehic);
 
-
-
-        SolicitudVehiculos solicitudVehiculos=new SolicitudVehiculos(numPlaca,color,modelo,marca,iDTipoVehiculo,tipoVehiculo,idConductor);
         Call<RespuestaVehiculo> call = smartCityService.doResVehiculo(solicitudVehiculos);
         call.enqueue(new Callback<RespuestaVehiculo>() {
             @Override
@@ -199,6 +265,7 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 }

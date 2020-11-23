@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,10 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 
 import org.json.JSONObject;
 
@@ -52,8 +50,7 @@ public class LoginConductorActivity extends AppCompatActivity {
 
     SmartCityService smartCityService;
     SmartCityClient smartCityClient;
-    FirebaseAuth mAuth;
-    DatabaseReference mDatabase;
+
     AlertDialog mDialog;
 
     String idPref;
@@ -63,18 +60,18 @@ public class LoginConductorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_conductor);
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mPref = getApplicationContext().getSharedPreferences("typeUser", MODE_PRIVATE);
+
         mDialog = new SpotsDialog.Builder()
                 .setContext(this)
-                .setMessage("Espere un momento")
+                .setMessage("Validando datos")
                 .setCancelable(false).build();
 
         retrofitInit();
         findViews();
         events();
     }
+
+
 
     private void retrofitInit() {
         smartCityClient = SmartCityClient.getInstance();
@@ -110,25 +107,7 @@ public class LoginConductorActivity extends AppCompatActivity {
             edtPassLogin.setError("Contraseña requerida");
         } else {
 
-            mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        String user = mPref.getString("user", "");
-                        if (user.equals("driver")) {
-                            Intent intent = new Intent(LoginConductorActivity.this, ConductorMapActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        }
 
-                    }
-                    else {
-                        Toast.makeText(LoginConductorActivity.this, "La contraseña o el password son incorrectos", Toast.LENGTH_SHORT).show();
-                    }
-                    mDialog.dismiss();
-                }
-            });
-            /*
             SolicitarLoginConductor solicitarLoginconductor =new SolicitarLoginConductor(email, pass);
             Call<RespuestaLoginConductor> call = smartCityService.doLoginConductor(solicitarLoginconductor);
             call.enqueue(new Callback<RespuestaLoginConductor>() {
@@ -136,14 +115,15 @@ public class LoginConductorActivity extends AppCompatActivity {
                 public void onResponse(Call<RespuestaLoginConductor> call, retrofit2.Response<RespuestaLoginConductor> response) {
                     if(response.isSuccessful()){
                         mDialog.dismiss();
-                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_EMAIL, response.body().getConEmail());
-                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_CONDUCTOR, response.body().getiDConductor());
-                        idPref=SharedPreferencesManager.getSomeStringValue(AppConst.PREF_ID_CONDUCTOR);
-                        emailPref=SharedPreferencesManager.getSomeStringValue(AppConst.PREF_EMAIL);
+                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_USERTOKEN, response.body().getToken());
+                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_CONDUCTOR, response.body().getIdUser());
+                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_USERNAMES, response.body().getNombre());
+                        emailPref=SharedPreferencesManager.getSomeStringValue(AppConst.PREF_USERNAMES);
 
 
-                        Toast.makeText(LoginConductorActivity.this, "Sesion iniciada correctamente", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginConductorActivity.this, "Bienvenido: "+emailPref, Toast.LENGTH_LONG).show();
                         Intent i = new Intent(LoginConductorActivity.this, RegistroVehiculoActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                         finish();
                     }else{
@@ -158,9 +138,10 @@ public class LoginConductorActivity extends AppCompatActivity {
                     Toast.makeText(LoginConductorActivity.this, "Problemas de conexion", Toast.LENGTH_SHORT).show();
                 }
             });
-            */
+
 
         }
     }
+
 
 }

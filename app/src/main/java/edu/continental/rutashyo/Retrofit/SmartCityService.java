@@ -1,4 +1,6 @@
 package edu.continental.rutashyo.Retrofit;
+import java.util.List;
+
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLogin;
 
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLoginConductor;
@@ -6,6 +8,7 @@ import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLoginConductor;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaPerfil;
 
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaRegistro;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaTipoVehiculo;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaVehiculo;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarLogin;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarLoginConductor;
@@ -28,8 +31,11 @@ public interface SmartCityService {
     @POST("smartcityhyo.tk/movurbana/api/auth/login")
     Call<RespuestaLogin> doLogin(@Body SolicitarLogin solicitarLogin);
 
-    @POST("Conductor/login.php")
+    @POST("smartcityhyo.tk/movurbana/api/auth/logindriver")
     Call<RespuestaLoginConductor> doLoginConductor(@Body SolicitarLoginConductor solicitarLoginConductor);
+
+    @GET("smartcityhyo.tk/movurbana/api/driver/tipovehiculos")
+    Call<List<RespuestaTipoVehiculo>> getTipoVehiculos();
 
     @POST("Usuario/Insert_Usuario.php")
     Call<RespuestaRegistro> doSignUp(@Body SolicitarRegistro solicitarRegistro);
@@ -37,7 +43,7 @@ public interface SmartCityService {
     @POST("Usuario/change_password.php")
     Call<RespuestaRegistro> doChangePass(@Body SolicitudCambiarPass solicitudCambiarPass);
 
-    @POST("Vehiculo/Insertar_Vehiculo.php")
+    @POST("smartcityhyo.tk/movurbana/api/driver/vehicle_register")
     Call<RespuestaVehiculo> doResVehiculo(@Body SolicitudVehiculos solicitudVehiculos);
 
     @POST("Usuario/Consulta_Usuario_Email.php")
