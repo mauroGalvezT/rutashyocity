@@ -16,6 +16,7 @@ import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarRegistro;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudCambiarEstado;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudCambiarPass;
 
+import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudSetLocation;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudVehiculos;
 
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudPerfil;
@@ -55,5 +56,9 @@ public interface SmartCityService {
 
     @POST("smartcityhyo.tk/movurbana/api/driver/cambiarestado")
     Call<RespuestaVehiculo> doUpdateStatus(@Body SolicitudCambiarEstado solicitudCambiarEstado);
+
+    @POST("smartcityhyo.tk/movurbana/api/driver/setlocation")
+    Call<RespuestaVehiculo> doSetLocation(@Body SolicitudSetLocation solicitudSetLocation);
+
 
 }

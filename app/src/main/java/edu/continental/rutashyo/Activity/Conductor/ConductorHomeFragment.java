@@ -59,6 +59,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.DefaultRetryPolicy;
 
+import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.directions.route.Route;
@@ -111,6 +112,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import static android.content.Context.LOCATION_SERVICE;
+import static android.os.Build.VERSION_CODES.M;
 
 import dmax.dialog.SpotsDialog;
 import edu.continental.rutashyo.R;
@@ -120,6 +122,7 @@ import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaVehiculo;
 import edu.continental.rutashyo.Retrofit.SmartCityClient;
 import edu.continental.rutashyo.Retrofit.SmartCityService;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudCambiarEstado;
+import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudSetLocation;
 import edu.continental.rutashyo.controller.AppController;
 import edu.continental.rutashyo.settings.AppConst;
 import edu.continental.rutashyo.settings.ConnectionDetector;
@@ -388,31 +391,11 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
 
 
 
-/*
-    private static String getUrl(LatLng origin, LatLng dest, String directionMode) {
-        // Origin of route
-        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-        // Destination of route
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-        // Mode
-        String mode = "mode=" + directionMode;
-        // Building the parameters to the web service
-        String parameters = str_origin + "&" + str_dest + "&" + mode;
-        // Output format
-        String output = "json";
-        // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" +context.getResources().getString(R.string.google_maps_key);
-        return url;
-    }
-*/
-
-    //return inflater.inflate(R.layout.fragment_home, container, false);
-    //}
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= M) {
             if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     && context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
@@ -448,6 +431,8 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_logo))
         );
 
+
+
         // Initialize the location fields
         if (currentLocation != null && mMarker != null) {
             LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
@@ -462,6 +447,8 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
                     .build();                   // Creates a CameraPosition from the builder
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
+        new setCurrentLocation().execute(String.valueOf(currentLocation.getLatitude()),String.valueOf(currentLocation.getLongitude()));
+
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -560,6 +547,7 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
             // Initialize the location fields
             if (currentLocation != null) {
                 LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
 
                 CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -578,6 +566,53 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
                 currentMarker.remove();
         }
     }
+
+
+
+    private class setCurrentLocation extends AsyncTask<String, Void, String> {
+        String token = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_USERTOKEN);
+
+        @Override
+        protected String doInBackground(String... params) {
+            final String latitude = params[0];
+            final String longitude = params[1];
+            //final String latitude = String.valueOf(currentLocation.getLatitude());
+            //final String longitude = String.valueOf(currentLocation.getLongitude());
+            SolicitudSetLocation solicitudSetLocation = new SolicitudSetLocation(token, latitude, longitude);
+            Call<RespuestaVehiculo> call = smartCityService.doSetLocation(solicitudSetLocation);
+            call.enqueue(new Callback<RespuestaVehiculo>() {
+                @Override
+                public void onResponse(Call<RespuestaVehiculo> call, Response<RespuestaVehiculo> response) {
+                    if(response.isSuccessful()){
+                        Toast.makeText(getActivity(), "se envio lat y long", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getActivity(), "no se envio", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaVehiculo> call, Throwable t) {
+
+                }
+            });
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //to add spacing between cards
+            if (this != null) {
+
+            }
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+    }
+
 
     @Override
     public void onRoutingFailure(RouteException e) {
