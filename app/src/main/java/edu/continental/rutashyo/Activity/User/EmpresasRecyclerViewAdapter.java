@@ -16,9 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import edu.continental.rutashyo.Activity.Fragments.HomeFragment;
 import edu.continental.rutashyo.R;
 import edu.continental.rutashyo.Retrofit.Respuesta.Empresa;
+import edu.continental.rutashyo.settings.AppConst;
 import edu.continental.rutashyo.settings.MyApp;
+import edu.continental.rutashyo.settings.SharedPreferencesManager;
 
 public class EmpresasRecyclerViewAdapter extends RecyclerView.Adapter<EmpresasRecyclerViewAdapter.ViewHolder> {
 
@@ -73,9 +76,10 @@ public class EmpresasRecyclerViewAdapter extends RecyclerView.Adapter<EmpresasRe
                 @Override
                 public void onClick(View view) {
                     //Toast.makeText(ctx, "idEmpresa: "+holder.mItem.getIDEmpresaTransp(), Toast.LENGTH_SHORT).show();
-                    System.out.println("idEmpresa: "+holder.mItem.getIDEmpresaTransp());
+                    //System.out.println("idEmpresa: "+holder.mItem.getIDEmpresaTransp());
                     Intent i=new Intent(MyApp.getContext(), InicioUserActivity.class);
                     i.putExtra("idEmpresa",holder.mItem.getIDEmpresaTransp());
+
                     ctx.startActivity(i);
 
                 }
