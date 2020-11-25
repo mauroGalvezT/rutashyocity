@@ -33,6 +33,7 @@ public class EmpresasActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     Context context;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,7 @@ public class EmpresasActivity extends AppCompatActivity {
             public void onRefresh() {
 
                 swipeRefreshLayout.setRefreshing(true);
-                loadEmpresasData();
+                loadNewData();
             }
         });
 
@@ -67,6 +68,20 @@ public class EmpresasActivity extends AppCompatActivity {
             }
         });
     }
+    private void loadNewData() {
+        empresasViewModel.getEmpresas().observe(this, new Observer<List<Empresa>>() {
+            @Override
+            public void onChanged(List<Empresa> empresas) {
+                empresaList=empresas;
+                swipeRefreshLayout.setRefreshing(false);
+
+                adapter.setData(empresaList);
+                empresasViewModel.getNewEmpresas().removeObserver(this);
+            }
+        });
+    }
+
+
 
 
 }

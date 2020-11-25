@@ -14,13 +14,13 @@
         android:id="@+id/imageViewProfile"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/bus_logo" />
+        tools:src="@drawable/ic_baseline_alt_route_24" />
 
     <TextView
         android:id="@+id/textViewNombreEmpresa"
@@ -29,6 +29,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
+        android:textColor="@color/white"
         app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
         app:layout_constraintTop_toTopOf="@+id/imageViewProfile" />
 
@@ -37,10 +38,25 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
+        android:textColor="@color/white"
         android:layout_marginTop="8dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
         app:layout_constraintTop_toBottomOf="@+id/textViewNombreEmpresa" />
+
+    <Button
+        android:id="@+id/buttonVerRutas"
+        android:layout_width="96dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_background"
+        android:text="@string/text_ver_ruta"
+        android:textColor="@color/colorBlanco"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.547"
+        app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPhoneEmpresa" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

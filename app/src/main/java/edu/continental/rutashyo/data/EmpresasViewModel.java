@@ -21,7 +21,14 @@ public class EmpresasViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Empresa>> getEmpresas(){
+
         return empresas;
     }
+    public LiveData<List<Empresa>> getNewEmpresas(){
+
+        empresas=empresaRepository.getAllEmpresas();
+        return empresas;
+    }
+
 
 }

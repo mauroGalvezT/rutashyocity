@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,8 @@ public class EmpresasRecyclerViewAdapter extends RecyclerView.Adapter<EmpresasRe
     private Context ctx;
     private List<Empresa> mValues;
     ConstraintLayout irMapa;
+    String nombre;
+    public Button btnRutas;
 
     public  EmpresasRecyclerViewAdapter(Context context,List<Empresa> items){
         mValues=items;
@@ -36,12 +39,21 @@ public class EmpresasRecyclerViewAdapter extends RecyclerView.Adapter<EmpresasRe
         View view = LayoutInflater.from((parent.getContext()))
                 .inflate(R.layout.activity_empresas,parent,false);
         irMapa = view.findViewById(R.id.irMapa);
-        irMapa.setOnClickListener(new View.OnClickListener() {
+
+        btnRutas=view.findViewById(R.id.buttonVerRutas);
+        btnRutas.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(ctx, "ir mapa", Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                Toast.makeText(ctx, "ir mapa "+nombre, Toast.LENGTH_SHORT).show();
             }
         });
+
+        /*irMapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ctx, "ir mapa "+nombre, Toast.LENGTH_SHORT).show();
+            }
+        });*/
         return new ViewHolder(view);
 
     }
@@ -52,6 +64,9 @@ public class EmpresasRecyclerViewAdapter extends RecyclerView.Adapter<EmpresasRe
         if(mValues!=null){
             holder.mItem=mValues.get(position);
 
+
+
+            nombre=holder.mItem.getEMTNombre();
             holder.tvNombreEmpresa.setText(holder.mItem.getEMTNombre());
             holder.tvTelefonoEmpresa.setText(holder.mItem.getEMTTelefono());
 
@@ -77,6 +92,7 @@ public class EmpresasRecyclerViewAdapter extends RecyclerView.Adapter<EmpresasRe
         public final TextView tvNombreEmpresa;
         public final TextView tvTelefonoEmpresa;
         public Empresa mItem;
+
 
 
         public ViewHolder( View itemView) {

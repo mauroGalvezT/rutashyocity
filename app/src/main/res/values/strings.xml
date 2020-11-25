@@ -58,6 +58,7 @@
     <string name="cambiar_contrasena">Cambiar Contraseña</string>
     <string name="recuperar_constrasena">Recuperar Constraseña</string>
     <string name="seleccione_su_tipo_de_vehiculo">Seleccione su tipo de vehiculo</string>
+    <string name="text_ver_ruta">Ver Ruta</string>
 
 
 </resources>
