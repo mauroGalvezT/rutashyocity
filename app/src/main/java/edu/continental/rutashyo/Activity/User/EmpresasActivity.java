@@ -33,7 +33,7 @@ public class EmpresasActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_empresas);
+        setContentView(R.layout.activity_empresas_list);
         empresasViewModel=new ViewModelProvider(this).get(EmpresasViewModel.class);
         recyclerView = findViewById(R.id.list);
         swipeRefreshLayout=findViewById(R.id.swiperefreshlayout);
