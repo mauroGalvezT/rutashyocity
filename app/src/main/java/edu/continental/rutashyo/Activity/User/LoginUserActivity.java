@@ -64,10 +64,11 @@ public class LoginUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login_user);
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mPref = getApplicationContext().getSharedPreferences("typeUser", MODE_PRIVATE);
+        //mAuth = FirebaseAuth.getInstance();
+        //mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        //mPref = getApplicationContext().getSharedPreferences("typeUser", MODE_PRIVATE);
 
         mDialog = new SpotsDialog.Builder()
                 .setContext(this)
@@ -127,26 +128,7 @@ public class LoginUserActivity extends AppCompatActivity {
             edtPassLogin.setError("Contraseña requerida");
         } else {
 
-            mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        String user = mPref.getString("user", "");
-                        if (user.equals("client")) {
-                            Intent intent = new Intent(LoginUserActivity.this, InicioUserActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        }
 
-                    }
-                    else {
-                        Toast.makeText(LoginUserActivity.this, "La contraseña o el password son incorrectos", Toast.LENGTH_SHORT).show();
-                    }
-                    mDialog.dismiss();
-                }
-            });
-
-            /**
             SolicitarLogin solicitarLogin =new SolicitarLogin(email, pass);
             Call<RespuestaLogin> call = smartCityService.doLogin(solicitarLogin);
             call.enqueue(new Callback<RespuestaLogin>() {
@@ -155,17 +137,16 @@ public class LoginUserActivity extends AppCompatActivity {
                     if(response.isSuccessful()){
                         mDialog.dismiss();
 
-                        //guardando datos(de acuerdo a la respuesta)
                         SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_USUARIO, response.body().getIdUser());
                         SharedPreferencesManager.setSomeStringValue(AppConst.PREF_USERTOKEN, response.body().getToken());
                         SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_USUARIO, response.body().getIdUser());
                         SharedPreferencesManager.setSomeBooleanValue(AppConst.PREF_STATUS, response.body().getStatus());
+                        emailPref = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_USERTOKEN);
 
-                        //SharedPreferencesManager.setSomeStringValue(AppConst.PREF_, response.body().getMessage());
-                        String emailPref = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_USERTOKEN);
+
                         Toast.makeText(LoginUserActivity.this, "Bienvendo: "+emailPref, Toast.LENGTH_SHORT).show();
 
-                        Intent i = new Intent(LoginUserActivity.this, InicioUserActivity.class);
+                        Intent i = new Intent(LoginUserActivity.this, EmpresasActivity.class);
                         startActivity(i);
                         finish();
                     }else{
@@ -181,7 +162,7 @@ public class LoginUserActivity extends AppCompatActivity {
                 }
             });
 
-             **/
+
         }
     }
 
