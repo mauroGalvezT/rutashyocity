@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +43,8 @@ public class InicioUserActivity extends AppCompatActivity {
     SmartCityService smartCityService;
     SmartCityClient smartCityClient;
     EditText edtEmailConfirmPerfil;
+
+    FloatingActionButton floatingEmpresas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,15 @@ public class InicioUserActivity extends AppCompatActivity {
         SharedPreferencesManager.setSomeStringValue(AppConst.PREF_IDEMPRESA, empresaID);
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
+
+        floatingEmpresas=findViewById(R.id.floatingActionButtonEmpresas);
+        floatingEmpresas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(InicioUserActivity.this, EmpresasActivity.class);
+                startActivity(i);
+            }
+        });
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         mDialog = new SpotsDialog.Builder()
                 .setContext(this)
