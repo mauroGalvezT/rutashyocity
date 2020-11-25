@@ -45,6 +45,11 @@ public class InicioUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_user);
+
+
+        String empresaID=getIntent().getStringExtra("idEmpresa");
+
+        Toast.makeText(this, "empresa "+empresaID, Toast.LENGTH_SHORT).show();
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         mDialog = new SpotsDialog.Builder()

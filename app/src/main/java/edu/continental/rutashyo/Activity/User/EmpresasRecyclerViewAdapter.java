@@ -1,6 +1,7 @@
 package edu.continental.rutashyo.Activity.User;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import edu.continental.rutashyo.R;
 import edu.continental.rutashyo.Retrofit.Respuesta.Empresa;
+import edu.continental.rutashyo.settings.MyApp;
 
 public class EmpresasRecyclerViewAdapter extends RecyclerView.Adapter<EmpresasRecyclerViewAdapter.ViewHolder> {
 
@@ -70,8 +72,12 @@ public class EmpresasRecyclerViewAdapter extends RecyclerView.Adapter<EmpresasRe
             btnVerRutas.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(ctx, "idEmpresa: "+holder.mItem.getIDEmpresaTransp(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ctx, "idEmpresa: "+holder.mItem.getIDEmpresaTransp(), Toast.LENGTH_SHORT).show();
                     System.out.println("idEmpresa: "+holder.mItem.getIDEmpresaTransp());
+                    Intent i=new Intent(MyApp.getContext(), InicioUserActivity.class);
+                    i.putExtra("idEmpresa",holder.mItem.getIDEmpresaTransp());
+                    ctx.startActivity(i);
+
                 }
             });
 
