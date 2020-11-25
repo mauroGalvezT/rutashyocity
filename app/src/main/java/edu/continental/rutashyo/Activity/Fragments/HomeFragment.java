@@ -63,8 +63,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.RoutingListener;
-import com.firebase.geofire.GeoLocation;
-import com.firebase.geofire.GeoQueryEventListener;
+//import com.firebase.geofire.GeoLocation;
+//import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
@@ -94,7 +94,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.tabs.TabLayout;
 
 
-import com.google.firebase.database.DatabaseError;
+//import com.google.firebase.database.DatabaseError;
 import com.sucho.placepicker.AddressData;
 import com.sucho.placepicker.Constants;
 import com.sucho.placepicker.MapType;
@@ -649,7 +649,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
 
                     if (mIsFirstTime) {
                         mIsFirstTime = false;
-                        getActiveDrivers();
+                        //getActiveDrivers();
                     }
                 }
             }
@@ -728,7 +728,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
         });
        // if (mIsFirstTime) {
         //    mIsFirstTime = false;
-            getActiveDrivers();
+            //getActiveDrivers();
         //}
         //new getTaxi().execute();
         //initJobs();
@@ -1051,7 +1051,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 if (mIsFirstTime) {
                     mIsFirstTime = false;
-                    getActiveDrivers();
+                    //getActiveDrivers();
                 }
 
                 if((departLocationReservation != null && destinationLocationReservation != null) && tabLocation.size() > 1) {
@@ -1180,7 +1180,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
         }
     }
 
-
+/*
     private void getActiveDrivers() {
 
         LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
@@ -1239,5 +1239,5 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
             }
         });
     }
-
+*/
 }
