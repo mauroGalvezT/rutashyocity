@@ -281,7 +281,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
                 Double lat15 = Double.valueOf(response.body().getLatInicio15());
                 Double long15 = Double.valueOf(response.body().getLongInicio15());
                 if(response.isSuccessful()){
-                    Toast.makeText(getContext(), "hay datos", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "hay datos", Toast.LENGTH_SHORT).show();
                     LatLng m1 = new LatLng(lat1, long1);
                     LatLng m2 = new LatLng(lat2, long2);
                     LatLng m3 = new LatLng(lat3, long3);
