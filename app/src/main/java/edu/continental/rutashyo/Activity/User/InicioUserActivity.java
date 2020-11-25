@@ -54,6 +54,8 @@ public class InicioUserActivity extends AppCompatActivity {
         String empresaID=getIntent().getStringExtra("idEmpresa");
 
         Toast.makeText(this, "empresa "+empresaID, Toast.LENGTH_SHORT).show();
+        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_IDEMPRESA, empresaID);
+
         bottomNavigation = findViewById(R.id.bottom_navigation);
 
         floatingEmpresas=findViewById(R.id.floatingActionButtonEmpresas);

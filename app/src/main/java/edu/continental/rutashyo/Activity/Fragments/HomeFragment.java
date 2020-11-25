@@ -42,6 +42,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -57,14 +58,13 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.directions.route.Route;
 import com.directions.route.RouteException;
 import com.directions.route.RoutingListener;
-import com.firebase.geofire.GeoLocation;
-import com.firebase.geofire.GeoQueryEventListener;
+//import com.firebase.geofire.GeoLocation;
+//import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
@@ -85,6 +85,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -94,7 +95,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.tabs.TabLayout;
 
 
-import com.google.firebase.database.DatabaseError;
+//import com.google.firebase.database.DatabaseError;
 import com.sucho.placepicker.AddressData;
 import com.sucho.placepicker.Constants;
 import com.sucho.placepicker.MapType;
@@ -117,9 +118,18 @@ import static android.content.Context.LOCATION_SERVICE;
 
 import edu.continental.rutashyo.R;
 //import edu.continental.rutashyo.direcciones.FetchURL;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaRutum;
+import edu.continental.rutashyo.Retrofit.SmartCityClient;
+import edu.continental.rutashyo.Retrofit.SmartCityService;
+import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudRuta;
 import edu.continental.rutashyo.providers.AuthProvider;
 import edu.continental.rutashyo.providers.GeofireProvider;
+import edu.continental.rutashyo.settings.AppConst;
 import edu.continental.rutashyo.settings.ConnectionDetector;
+import edu.continental.rutashyo.settings.SharedPreferencesManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class HomeFragment extends Fragment  implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
@@ -207,7 +217,8 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
     private FusedLocationProviderClient mFusedLocation;
 
     private Marker mMarker;
-
+    SmartCityService smartCityService;
+    SmartCityClient smartCityClient;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -221,7 +232,116 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
 
         if (getArguments() != null)
             currpos = getArguments().getInt("tab_pos", 0);
+
+        retrofitInit();
     }
+    private void retrofitInit() {
+
+        smartCityClient = SmartCityClient.getInstance();
+        smartCityService = smartCityClient.getSmartCityService();
+
+    }
+
+    private void rutaEmpresa() {
+        String idEmpresa = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_IDEMPRESA);
+
+        SolicitudRuta solicitudRuta = new SolicitudRuta(idEmpresa);
+        Call<RespuestaRutum> call = smartCityService.doRutas(solicitudRuta);
+        call.enqueue(new Callback<RespuestaRutum>() {
+            @Override
+            public void onResponse(Call<RespuestaRutum> call, Response<RespuestaRutum> response) {
+                Double lat1 = Double.valueOf(response.body().getLatInicio1());
+                Double long1 = Double.valueOf(response.body().getLongInicio1());
+                Double lat2 = Double.valueOf(response.body().getLatInicio2());
+                Double long2 = Double.valueOf(response.body().getLongInicio2());
+                Double lat3 = Double.valueOf(response.body().getLatInicio3());
+                Double long3 = Double.valueOf(response.body().getLongInicio3());
+                Double lat4 = Double.valueOf(response.body().getLatInicio4());
+                Double long4 = Double.valueOf(response.body().getLongInicio4());
+                Double lat5 = Double.valueOf(response.body().getLatInicio5());
+                Double long5 = Double.valueOf(response.body().getLongInicio5());
+                Double lat6 = Double.valueOf(response.body().getLatInicio6());
+                Double long6 = Double.valueOf(response.body().getLongInicio6());
+                Double lat7 = Double.valueOf(response.body().getLatInicio7());
+                Double long7 = Double.valueOf(response.body().getLongInicio7());
+                Double lat8 = Double.valueOf(response.body().getLatInicio8());
+                Double long8 = Double.valueOf(response.body().getLongInicio8());
+                Double lat9 = Double.valueOf(response.body().getLatInicio9());
+                Double long9 = Double.valueOf(response.body().getLongInicio9());
+                Double lat10 = Double.valueOf(response.body().getLatInicio10());
+                Double long10 = Double.valueOf(response.body().getLongInicio10());
+                Double lat11 = Double.valueOf(response.body().getLatInicio11());
+                Double long11 = Double.valueOf(response.body().getLongInicio11());
+                Double lat12 = Double.valueOf(response.body().getLatInicio12());
+                Double long12 = Double.valueOf(response.body().getLongInicio12());
+                Double lat13 = Double.valueOf(response.body().getLatInicio13());
+                Double long13 = Double.valueOf(response.body().getLongInicio13());
+                Double lat14 = Double.valueOf(response.body().getLatInicio14());
+                Double long14 = Double.valueOf(response.body().getLongInicio14());
+                Double lat15 = Double.valueOf(response.body().getLatInicio15());
+                Double long15 = Double.valueOf(response.body().getLongInicio15());
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), "hay datos", Toast.LENGTH_SHORT).show();
+                    LatLng m1 = new LatLng(lat1, long1);
+                    LatLng m2 = new LatLng(lat2, long2);
+                    LatLng m3 = new LatLng(lat3, long3);
+                    LatLng m4 = new LatLng(lat4, long4);
+                    LatLng m5 = new LatLng(lat5, long5);
+                    LatLng m6 = new LatLng(lat6, long6);
+                    LatLng m7 = new LatLng(lat7, long7);
+                    LatLng m8 = new LatLng(lat8, long8);
+                    LatLng m9 = new LatLng(lat9, long9);
+                    LatLng m10 = new LatLng(lat10, long10);
+                    LatLng m11 = new LatLng(lat11, long11);
+                    LatLng m12 = new LatLng(lat12, long12);
+                    LatLng m13 = new LatLng(lat13, long13);
+                    LatLng m14 = new LatLng(lat14, long14);
+                    LatLng m15 = new LatLng(lat15, long15);
+                    mMap.addMarker(new MarkerOptions()
+                            .position(m1)
+                            .title("Inicio Ruta")
+                            .draggable(true)
+                            //.snippet("Inicio")
+                            .draggable(true)
+                    );
+                    mMap.addMarker(new MarkerOptions()
+                            .position(m15)
+                            .title("Fin de la ruta")
+                            .draggable(true)
+                            //.snippet("Final de ruta")
+                            .draggable(true)
+                    );
+                    PolylineOptions rectOptions = new PolylineOptions()
+                            .add(m1)
+                            .add(m2)
+                            .add(m3)
+                            .add(m4)
+                            .add(m5)
+                            .add(m6)
+                            .add(m7)
+                            .add(m8)
+                            .add(m9)
+                            .add(m10)
+                            .add(m11)
+                            .add(m12)
+                            .add(m13)
+                            .add(m14)
+                            .add(m15)
+                            .color(R.color.primaryColor)
+                            .width(30);
+                    Polyline polyline = mMap.addPolyline(rectOptions);
+                }else{
+                    Toast.makeText(getContext(), "no hay datos", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaRutum> call, Throwable t) {
+                Toast.makeText(getContext(), "algo paso", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -649,7 +769,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
 
                     if (mIsFirstTime) {
                         mIsFirstTime = false;
-                        getActiveDrivers();
+                        //getActiveDrivers();
                     }
                 }
             }
@@ -728,10 +848,11 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
         });
        // if (mIsFirstTime) {
         //    mIsFirstTime = false;
-            getActiveDrivers();
+            //getActiveDrivers();
         //}
         //new getTaxi().execute();
         //initJobs();
+        rutaEmpresa();
     }
 
     public static void showDirection(String latitude_client, String longitude_client, String latitude_destination, String longitude_destination){
@@ -1051,7 +1172,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 if (mIsFirstTime) {
                     mIsFirstTime = false;
-                    getActiveDrivers();
+                    //getActiveDrivers();
                 }
 
                 if((departLocationReservation != null && destinationLocationReservation != null) && tabLocation.size() > 1) {
@@ -1180,7 +1301,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
         }
     }
 
-
+/*
     private void getActiveDrivers() {
 
         LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
@@ -1239,5 +1360,5 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
             }
         });
     }
-
+*/
 }
