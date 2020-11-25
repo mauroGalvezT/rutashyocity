@@ -83,6 +83,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -118,10 +119,13 @@ import dmax.dialog.SpotsDialog;
 import edu.continental.rutashyo.R;
 //import edu.continental.rutashyo.direcciones.FetchURL;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaRegistro;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaRutum;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaTipoVehiculo;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaVehiculo;
 import edu.continental.rutashyo.Retrofit.SmartCityClient;
 import edu.continental.rutashyo.Retrofit.SmartCityService;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudCambiarEstado;
+import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudRuta;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudSetLocation;
 import edu.continental.rutashyo.controller.AppController;
 import edu.continental.rutashyo.settings.AppConst;
@@ -218,6 +222,11 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
     private LocationRequest mLocationRequest;
     private FusedLocationProviderClient mFusedLocation;
     android.app.AlertDialog mDialog;
+
+
+    List<RespuestaRutum> respuestaRutumList = new ArrayList<>();
+    String idEmpresa = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_IDEMPRESA);
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -231,6 +240,105 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
         if (getArguments() != null)
             currpos = getArguments().getInt("tab_pos", 0);
         retrofitInit();
+
+    }
+
+    private void rutaEmpresa() {
+        SolicitudRuta solicitudRuta = new SolicitudRuta(idEmpresa);
+        Call<RespuestaRutum> call = smartCityService.doRutas(solicitudRuta);
+        call.enqueue(new Callback<RespuestaRutum>() {
+            @Override
+            public void onResponse(Call<RespuestaRutum> call, Response<RespuestaRutum> response) {
+                Double lat1 = Double.valueOf(response.body().getLatInicio1());
+                Double long1 = Double.valueOf(response.body().getLongInicio1());
+                Double lat2 = Double.valueOf(response.body().getLatInicio2());
+                Double long2 = Double.valueOf(response.body().getLongInicio2());
+                Double lat3 = Double.valueOf(response.body().getLatInicio3());
+                Double long3 = Double.valueOf(response.body().getLongInicio3());
+                Double lat4 = Double.valueOf(response.body().getLatInicio4());
+                Double long4 = Double.valueOf(response.body().getLongInicio4());
+                Double lat5 = Double.valueOf(response.body().getLatInicio5());
+                Double long5 = Double.valueOf(response.body().getLongInicio5());
+                Double lat6 = Double.valueOf(response.body().getLatInicio6());
+                Double long6 = Double.valueOf(response.body().getLongInicio6());
+                Double lat7 = Double.valueOf(response.body().getLatInicio7());
+                Double long7 = Double.valueOf(response.body().getLongInicio7());
+                Double lat8 = Double.valueOf(response.body().getLatInicio8());
+                Double long8 = Double.valueOf(response.body().getLongInicio8());
+                Double lat9 = Double.valueOf(response.body().getLatInicio9());
+                Double long9 = Double.valueOf(response.body().getLongInicio9());
+                Double lat10 = Double.valueOf(response.body().getLatInicio10());
+                Double long10 = Double.valueOf(response.body().getLongInicio10());
+                Double lat11 = Double.valueOf(response.body().getLatInicio11());
+                Double long11 = Double.valueOf(response.body().getLongInicio11());
+                Double lat12 = Double.valueOf(response.body().getLatInicio12());
+                Double long12 = Double.valueOf(response.body().getLongInicio12());
+                Double lat13 = Double.valueOf(response.body().getLatInicio13());
+                Double long13 = Double.valueOf(response.body().getLongInicio13());
+                Double lat14 = Double.valueOf(response.body().getLatInicio14());
+                Double long14 = Double.valueOf(response.body().getLongInicio14());
+                Double lat15 = Double.valueOf(response.body().getLatInicio15());
+                Double long15 = Double.valueOf(response.body().getLongInicio15());
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), "hay datos", Toast.LENGTH_SHORT).show();
+                    LatLng m1 = new LatLng(lat1, long1);
+                    LatLng m2 = new LatLng(lat2, long2);
+                    LatLng m3 = new LatLng(lat3, long3);
+                    LatLng m4 = new LatLng(lat4, long4);
+                    LatLng m5 = new LatLng(lat5, long5);
+                    LatLng m6 = new LatLng(lat6, long6);
+                    LatLng m7 = new LatLng(lat7, long7);
+                    LatLng m8 = new LatLng(lat8, long8);
+                    LatLng m9 = new LatLng(lat9, long9);
+                    LatLng m10 = new LatLng(lat10, long10);
+                    LatLng m11 = new LatLng(lat11, long11);
+                    LatLng m12 = new LatLng(lat12, long12);
+                    LatLng m13 = new LatLng(lat13, long13);
+                    LatLng m14 = new LatLng(lat14, long14);
+                    LatLng m15 = new LatLng(lat15, long15);
+                    mMap.addMarker(new MarkerOptions()
+                            .position(m1)
+                            .title("Inicio Ruta")
+                            .draggable(true)
+                            //.snippet("Inicio")
+                            .draggable(true)
+                    );
+                    mMap.addMarker(new MarkerOptions()
+                            .position(m15)
+                            .title("Fin de la ruta")
+                            .draggable(true)
+                            //.snippet("Final de ruta")
+                            .draggable(true)
+                    );
+                    PolylineOptions rectOptions = new PolylineOptions()
+                            .add(m1)
+                            .add(m2)
+                            .add(m3)
+                            .add(m4)
+                            .add(m5)
+                            .add(m6)
+                            .add(m7)
+                            .add(m8)
+                            .add(m9)
+                            .add(m10)
+                            .add(m11)
+                            .add(m12)
+                            .add(m13)
+                            .add(m14)
+                            .add(m15)
+                            .color(R.color.primaryColor)
+                            .width(30);
+                    Polyline polyline = mMap.addPolyline(rectOptions);
+                }else{
+                    Toast.makeText(getContext(), "no hay datos", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaRutum> call, Throwable t) {
+                Toast.makeText(getContext(), "algo paso", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void retrofitInit() {
@@ -433,6 +541,7 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
 
 
 
+
         // Initialize the location fields
         if (currentLocation != null && mMarker != null) {
             LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
@@ -447,7 +556,12 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
                     .build();                   // Creates a CameraPosition from the builder
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
+
         new setCurrentLocation().execute(String.valueOf(currentLocation.getLatitude()),String.valueOf(currentLocation.getLongitude()));
+        rutaEmpresa();
+
+
+
 
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -457,9 +571,11 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
             }
         });
 
-        //new getTaxi().execute();
-        //initJobs();
+
     }
+
+
+
 
     public static void showDirection(String latitude_client, String longitude_client, String latitude_destination, String longitude_destination){
         if(departMarkerMesRequetes != null && destinationMarkerMesRequetes != null) {
@@ -538,13 +654,8 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
     @Override
     public void onLocationChanged(Location location) {
         this.currentLocation = location;
-//        Toast.makeText(context, "Ok", Toast.LENGTH_SHORT).show();
         if(verif == false) {
-//            destinationLocation = location;
-//            departLocationReservation = location;
-//            destinationLocationReservation = location;
 
-            // Initialize the location fields
             if (currentLocation != null) {
                 LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 
@@ -572,6 +683,7 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
     private class setCurrentLocation extends AsyncTask<String, Void, String> {
         String token = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_USERTOKEN);
 
+
         @Override
         protected String doInBackground(String... params) {
             final String latitude = params[0];
@@ -584,7 +696,7 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
                 @Override
                 public void onResponse(Call<RespuestaVehiculo> call, Response<RespuestaVehiculo> response) {
                     if(response.isSuccessful()){
-                        Toast.makeText(getActivity(), "se envio lat y long", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(getActivity(), "se envio lat y long", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getActivity(), "no se envio", Toast.LENGTH_SHORT).show();
                     }

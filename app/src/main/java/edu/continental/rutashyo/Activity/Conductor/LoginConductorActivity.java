@@ -118,6 +118,7 @@ public class LoginConductorActivity extends AppCompatActivity {
                         SharedPreferencesManager.setSomeStringValue(AppConst.PREF_USERTOKEN, response.body().getToken());
                         SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_CONDUCTOR, response.body().getIdUser());
                         SharedPreferencesManager.setSomeStringValue(AppConst.PREF_USERNAMES, response.body().getNombre());
+                        SharedPreferencesManager.setSomeStringValue(AppConst.PREF_IDEMPRESA, response.body().getIdEmpresaTrasnporte());
                         emailPref=SharedPreferencesManager.getSomeStringValue(AppConst.PREF_USERNAMES);
 
 

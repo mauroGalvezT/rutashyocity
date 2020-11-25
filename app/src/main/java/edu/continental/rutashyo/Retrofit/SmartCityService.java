@@ -8,6 +8,7 @@ import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLoginConductor;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaPerfil;
 
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaRegistro;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaRutum;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaTipoVehiculo;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaVehiculo;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarLogin;
@@ -16,6 +17,7 @@ import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarRegistro;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudCambiarEstado;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudCambiarPass;
 
+import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudRuta;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudSetLocation;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudVehiculos;
 
@@ -48,6 +50,9 @@ public interface SmartCityService {
     @POST("smartcityhyo.tk/movurbana/api/driver/vehicle_register")
     Call<RespuestaVehiculo> doResVehiculo(@Body SolicitudVehiculos solicitudVehiculos);
 
+    @POST("smartcityhyo.tk/movurbana/api/driver/rutas")
+    Call<RespuestaRutum> doRutas(@Body SolicitudRuta solicitudRuta);
+
     @POST("Usuario/Consulta_Usuario_Email.php")
     Call<RespuestaPerfil> getProfile(@Body SolicitudPerfil solicitarPerfil);
 
@@ -59,6 +64,8 @@ public interface SmartCityService {
 
     @POST("smartcityhyo.tk/movurbana/api/driver/setlocation")
     Call<RespuestaVehiculo> doSetLocation(@Body SolicitudSetLocation solicitudSetLocation);
+
+
 
 
 }

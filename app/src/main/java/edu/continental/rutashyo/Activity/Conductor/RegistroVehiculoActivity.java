@@ -81,8 +81,7 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
                     for(RespuestaTipoVehiculo post : response.body()){
                         String id = post.getIDTipoVehiculo();
                         String name = post.getTVNombre();
-                        RespuestaTipoVehiculo tVNombre = new RespuestaTipoVehiculo(name);
-                        RespuestaTipoVehiculo iDTipoVehiculo = new RespuestaTipoVehiculo(id);
+
                         tipVehic.add(new RespuestaTipoVehiculo(id, name));
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         tipoVehiculosSpinner.setAdapter(adapter);
@@ -248,7 +247,7 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
             public void onResponse(Call<RespuestaVehiculo> call, Response<RespuestaVehiculo> response) {
                 if (response.isSuccessful()){
                     mDialog.dismiss();
-                    Toast.makeText(RegistroVehiculoActivity.this, "Registrado correctamente", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RegistroVehiculoActivity.this, "Registrado correctamente", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(RegistroVehiculoActivity.this, InicioConductorActivity.class);
                     startActivity(i);
                     finish();

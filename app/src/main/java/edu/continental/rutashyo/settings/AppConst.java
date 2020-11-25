@@ -14,6 +14,7 @@ public class AppConst {
     public static final String PREF_USERDIRECCION = "PREF_USERDIRECCION";
     public static final String PREF_USERTOKEN = "PREF_USERTOKEN";
     public static final String PREF_VEHICTIPO = "PREF_VEHICTIPO";
+    public static final String PREF_IDEMPRESA = "PREF_IDEMPRESA";
 
 
 
