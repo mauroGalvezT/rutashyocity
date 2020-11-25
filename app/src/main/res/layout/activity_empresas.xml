@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".Activity.User.EmpresasActivity"
-    android:orientation="horizontal"
-    android:padding="16dp"
-    android:id="@+id/irMapa">
+    android:padding="16dp">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -43,6 +41,16 @@
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
         app:layout_constraintTop_toBottomOf="@+id/textViewNombreEmpresa" />
+
+    <TextView
+        android:id="@+id/textViewIdRuta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="TextView"
+        android:textColor="#00000000"
+        app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPhoneEmpresa" />
 
     <Button
         android:id="@+id/buttonVerRutas"

@@ -22,9 +22,9 @@ public class EmpresasRecyclerViewAdapter extends RecyclerView.Adapter<EmpresasRe
 
     private Context ctx;
     private List<Empresa> mValues;
-    ConstraintLayout irMapa;
+    //ConstraintLayout irMapa;
     String nombre;
-    public Button btnRutas;
+    public Button btnVerRutas;
 
     public  EmpresasRecyclerViewAdapter(Context context,List<Empresa> items){
         mValues=items;
@@ -38,15 +38,11 @@ public class EmpresasRecyclerViewAdapter extends RecyclerView.Adapter<EmpresasRe
 
         View view = LayoutInflater.from((parent.getContext()))
                 .inflate(R.layout.activity_empresas,parent,false);
-        irMapa = view.findViewById(R.id.irMapa);
+        //irMapa = view.findViewById(R.id.irMapa);
 
-        btnRutas=view.findViewById(R.id.buttonVerRutas);
-        btnRutas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(ctx, "ir mapa "+nombre, Toast.LENGTH_SHORT).show();
-            }
-        });
+        btnVerRutas=view.findViewById(R.id.buttonVerRutas);
+
+
 
         /*irMapa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,9 +62,18 @@ public class EmpresasRecyclerViewAdapter extends RecyclerView.Adapter<EmpresasRe
 
 
 
-            nombre=holder.mItem.getEMTNombre();
+            nombre=holder.mItem.getIDEmpresaTransp();
             holder.tvNombreEmpresa.setText(holder.mItem.getEMTNombre());
             holder.tvTelefonoEmpresa.setText(holder.mItem.getEMTTelefono());
+            holder.idRut.setText(holder.mItem.getIDEmpresaTransp());
+
+            btnVerRutas.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(ctx, "idEmpresa: "+holder.mItem.getIDEmpresaTransp(), Toast.LENGTH_SHORT).show();
+                    System.out.println("idEmpresa: "+holder.mItem.getIDEmpresaTransp());
+                }
+            });
 
         }
     }
@@ -91,17 +96,23 @@ public class EmpresasRecyclerViewAdapter extends RecyclerView.Adapter<EmpresasRe
         public final ImageView imageView;
         public final TextView tvNombreEmpresa;
         public final TextView tvTelefonoEmpresa;
+        //public final Button btnVerRutas;
+        public final TextView idRut;
         public Empresa mItem;
 
 
 
-        public ViewHolder( View itemView) {
+        public ViewHolder(final View itemView) {
 
             super((itemView));
             mView=itemView;
             imageView=itemView.findViewById(R.id.imageViewProfile);
             tvNombreEmpresa=itemView.findViewById(R.id.textViewNombreEmpresa);
             tvTelefonoEmpresa=itemView.findViewById(R.id.textViewPhoneEmpresa);
+            idRut=itemView.findViewById(R.id.textViewIdRuta);
+
+
+
 
         }
 
