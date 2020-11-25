@@ -10,7 +10,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -58,6 +61,8 @@ public class EmpresasActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Empresa> empresas) {
                 empresaList=empresas;
+                swipeRefreshLayout.setRefreshing(false);
+
                 adapter.setData(empresaList);
             }
         });

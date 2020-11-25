@@ -67,7 +67,7 @@ public interface SmartCityService {
     Call<RespuestaVehiculo> doSetLocation(@Body SolicitudSetLocation solicitudSetLocation);
 
 
-    @GET("smartcityhyo.tk/movurbana/api/empresa/getempresa")
+    @GET("smartcityhyo.tk/movurbana/api/empresa/getempresas")
     Call<List<Empresa>> getAllEmpresas();
 
 
