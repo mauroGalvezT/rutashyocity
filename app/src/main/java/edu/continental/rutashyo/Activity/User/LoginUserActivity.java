@@ -141,10 +141,10 @@ public class LoginUserActivity extends AppCompatActivity {
                         SharedPreferencesManager.setSomeStringValue(AppConst.PREF_USERTOKEN, response.body().getToken());
                         SharedPreferencesManager.setSomeStringValue(AppConst.PREF_ID_USUARIO, response.body().getIdUser());
                         SharedPreferencesManager.setSomeBooleanValue(AppConst.PREF_STATUS, response.body().getStatus());
-                        emailPref = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_USERTOKEN);
+                        //emailPref = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_USERTOKEN);
 
 
-                        Toast.makeText(LoginUserActivity.this, "Bienvendo: "+emailPref, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginUserActivity.this, "Bienvendo: ", Toast.LENGTH_SHORT).show();
 
                         Intent i = new Intent(LoginUserActivity.this, EmpresasActivity.class);
                         startActivity(i);

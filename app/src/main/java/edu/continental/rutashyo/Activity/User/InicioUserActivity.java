@@ -96,6 +96,10 @@ public class InicioUserActivity extends AppCompatActivity {
                         case R.id.itemHome:
                             openFragment(new HomeFragment());
                             return true;
+                        case R.id.itemEmpresas:
+                            Intent i = new Intent(InicioUserActivity.this, EmpresasActivity.class);
+                            startActivity(i);
+                            return true;
                         case R.id.itemProfile:
                             mDialog.show();
 
