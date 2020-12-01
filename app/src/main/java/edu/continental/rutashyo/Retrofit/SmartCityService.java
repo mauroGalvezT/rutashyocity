@@ -2,6 +2,7 @@ package edu.continental.rutashyo.Retrofit;
 import java.util.List;
 
 import edu.continental.rutashyo.Retrofit.Respuesta.Empresa;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaEmpresa;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLogin;
 
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLoginConductor;
@@ -18,6 +19,7 @@ import edu.continental.rutashyo.Retrofit.Solicitud.SolicitarRegistro;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudCambiarEstado;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudCambiarPass;
 
+import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudEmpresa;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudRuta;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudSetLocation;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudVehiculos;
@@ -69,6 +71,9 @@ public interface SmartCityService {
 
     @GET("smartcityhyo.tk/movurbana/api/empresa/getempresas")
     Call<List<Empresa>> getAllEmpresas();
+
+    @POST("smartcityhyo.tk/movurbana/api/driver/getlocation")
+    Call<RespuestaEmpresa> getDrivers(@Body SolicitudEmpresa solicitudEmpresa);
 
 
 
