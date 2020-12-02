@@ -1,6 +1,5 @@
 
 package edu.continental.rutashyo.Retrofit.Respuesta;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -79,5 +78,6 @@ public class RespuestaEmpresa {
     public void setCONStatus(String cONStatus) {
         this.cONStatus = cONStatus;
     }
+
 
 }

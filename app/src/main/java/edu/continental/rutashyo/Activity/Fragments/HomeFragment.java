@@ -102,6 +102,7 @@ import com.sucho.placepicker.Constants;
 import com.sucho.placepicker.MapType;
 import com.sucho.placepicker.PlacePicker;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -122,6 +123,7 @@ import edu.continental.rutashyo.Activity.User.InicioUserActivity;
 import edu.continental.rutashyo.R;
 //import edu.continental.rutashyo.direcciones.FetchURL;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaEmpresa;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaEmpresas;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaRutum;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaTipoVehiculo;
 import edu.continental.rutashyo.Retrofit.SmartCityClient;
@@ -262,8 +264,6 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
             @Override
             public void onResponse(Call<RespuestaRutum> call, Response<RespuestaRutum> response) {
 
-
-                getDrivers();
                 Double lat1 = Double.valueOf(response.body().getLatInicio1());
                 Double long1 = Double.valueOf(response.body().getLongInicio1());
                 Double lat2 = Double.valueOf(response.body().getLatInicio2());
@@ -760,26 +760,48 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
         final String idEmpresa = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_IDEMPRESA);
 
         SolicitudEmpresa solicitudEmpresa=new SolicitudEmpresa(idEmpresa);
-        Call<List<RespuestaEmpresa>> call=smartCityService.getDrivers(solicitudEmpresa);
-        call.enqueue(new Callback<List<RespuestaEmpresa>>() {
-            @Override
-            public void onResponse(Call<List<RespuestaEmpresa>> call, Response<List<RespuestaEmpresa>> response) {
-                if (response.isSuccessful()){
-                    for (RespuestaEmpresa post : response.body()){
 
-                        String lat=empresa.getCONLatitud();
-                        String lon= empresa.getCONLongitud();
-                        empresaList.add(new RespuestaEmpresa(lat,lon));
-                        Toast.makeText(getContext(), ":"+ empresaList.get(0), Toast.LENGTH_SHORT).show();
+        Call<RespuestaEmpresas> call = smartCityService.getDrivers(solicitudEmpresa);
+        call.enqueue(new Callback<RespuestaEmpresas>() {
+            @Override
+            public void onResponse(@NotNull Call<RespuestaEmpresas> call, @NotNull Response<RespuestaEmpresas> response) {
+
+                Double lat1 = Double.valueOf(response.body().getLat1());
+                Double long1 = Double.valueOf(response.body().getLong1());
+                Double lat2 = Double.valueOf(response.body().getLat2());
+                Double long2 = Double.valueOf(response.body().getLong2());
+                Double lat3 = Double.valueOf(response.body().getLat3());
+                Double long3 = Double.valueOf(response.body().getLong3());
+                if(response.isSuccessful()){
+
+                    LatLng c1 = new LatLng(lat1, long1);
+                    LatLng c2 = new LatLng(lat2, long2);
+                    LatLng c3 = new LatLng(lat3, long3);
+
+                    if(c1!=null){
+                        mMap.addMarker(new MarkerOptions().position(c1).title("Conductor disponible").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_logo)));
                     }
+                    if(c2!=null){
+                        mMap.addMarker(new MarkerOptions().position(c2).title("Conductor disponible").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_logo)));
+                    }
+                    if(c3!=null){
+                        mMap.addMarker(new MarkerOptions().position(c3).title("Conductor disponible").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_logo)));
+                    }
+
+
+                }else{
+                    Toast.makeText(getContext(), "no hay datos", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<List<RespuestaEmpresa>> call, Throwable t) {
+            public void onFailure(Call<RespuestaEmpresas> call, Throwable t) {
 
+                Toast.makeText(getContext(), "algo paso", Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
     }
 

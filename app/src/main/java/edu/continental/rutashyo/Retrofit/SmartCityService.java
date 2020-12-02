@@ -3,6 +3,7 @@ import java.util.List;
 
 import edu.continental.rutashyo.Retrofit.Respuesta.Empresa;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaEmpresa;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaEmpresas;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLogin;
 
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaLoginConductor;
@@ -73,7 +74,7 @@ public interface SmartCityService {
     Call<List<Empresa>> getAllEmpresas();
 
     @POST("smartcityhyo.tk/movurbana/api/driver/getlocation")
-    Call<List<RespuestaEmpresa>> getDrivers(@Body SolicitudEmpresa solicitudEmpresa);
+    Call<RespuestaEmpresas> getDrivers(@Body SolicitudEmpresa solicitudEmpresa);
 
 
 
