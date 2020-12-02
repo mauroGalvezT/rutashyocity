@@ -146,7 +146,7 @@ public class HomeDriverActivity extends AppCompatActivity implements OnMapReadyC
                         public void onResponse(Call<RespuestaVehiculo> call, Response<RespuestaVehiculo> response) {
                             if(response.isSuccessful()){
                                 //mDialog.dismiss();
-                                Toast.makeText(HomeDriverActivity.this, "no activo", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(HomeDriverActivity.this, "no activo", Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -169,7 +169,7 @@ public class HomeDriverActivity extends AppCompatActivity implements OnMapReadyC
                         public void onResponse(Call<RespuestaVehiculo> call, Response<RespuestaVehiculo> response) {
                             if(response.isSuccessful()){
                                 //mDialog.dismiss();
-                                Toast.makeText(HomeDriverActivity.this, "activo", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(HomeDriverActivity.this, "activo", Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -308,9 +308,9 @@ public class HomeDriverActivity extends AppCompatActivity implements OnMapReadyC
                 @Override
                 public void onResponse(Call<RespuestaVehiculo> call, Response<RespuestaVehiculo> response) {
                     if(response.isSuccessful()){
-                        Toast.makeText(HomeDriverActivity.this, "se envio lat y long", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeDriverActivity.this, "se envio lat y long", Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(HomeDriverActivity.this, "no se envio", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeDriverActivity.this, "no se envio", Toast.LENGTH_SHORT).show();
                     }
                 }
 
