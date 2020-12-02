@@ -238,10 +238,10 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
         setHasOptionsMenu(true);
         mAuthProvider = new AuthProvider();
         mGeofireProvider = new GeofireProvider();
-       // mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
+        // mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
 
-       // mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-       // mMapFragment.getMapAsync(this);
+        // mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        // mMapFragment.getMapAsync(this);
 
         if (getArguments() != null)
             currpos = getArguments().getInt("tab_pos", 0);
@@ -460,8 +460,8 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
 
                     if(departMarkerReservation != null && destinationMarkerReservation != null && tabLocation.size() > 1) {
                         showProgressDialog();
-                       // M.setCurrentFragment("home",context);
-                       // new FetchURL(getActivity(),"home").execute(getUrl(departMarkerReservation.getPosition(), destinationMarkerReservation.getPosition(), "driving"), "driving");
+                        // M.setCurrentFragment("home",context);
+                        // new FetchURL(getActivity(),"home").execute(getUrl(departMarkerReservation.getPosition(), destinationMarkerReservation.getPosition(), "driving"), "driving");
                     }
                 }
             }
@@ -625,8 +625,8 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
                             if(departMarkerReservation != null && destinationMarkerReservation != null && tabLocation.size() > 1) {
                                 showProgressDialog();
 
-                              //  M.setCurrentFragment("home",context);
-                               //new FetchURL(getActivity(),"home").execute(getUrl(departMarkerReservation.getPosition(), destinationMarkerReservation.getPosition(), "driving"), "driving");
+                                //  M.setCurrentFragment("home",context);
+                                //new FetchURL(getActivity(),"home").execute(getUrl(departMarkerReservation.getPosition(), destinationMarkerReservation.getPosition(), "driving"), "driving");
 //                                BottomSheetFragmentRequeteFacturation bottomSheetFragmentBooking = new BottomSheetFragmentRequeteFacturation(getActivity(), departLocationReservation, destinationLocationReservation);
 //                                bottomSheetFragmentBooking.show(((FragmentActivity) context).getSupportFragmentManager(), bottomSheetFragmentBooking.getTag());
                             }
@@ -915,9 +915,9 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
 //                Toast.makeText(context, ""+latLng.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-       // if (mIsFirstTime) {
+        // if (mIsFirstTime) {
         //    mIsFirstTime = false;
-            //getActiveDrivers();
+        //getActiveDrivers();
         //}
         //new getTaxi().execute();
         //initJobs();
@@ -957,7 +957,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
         //M.showLoadingDialog(context);
     }
     public static void dismissProgressDialog(){
-       // M.hideLoadingDialog();
+        // M.hideLoadingDialog();
     }
 
     @Override
@@ -1265,7 +1265,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
 
                     if(departMarkerReservation != null && destinationMarkerReservation != null && tabLocation.size() > 1) {
                         showProgressDialog();
-                       // M.setCurrentFragment("home",context);
+                        // M.setCurrentFragment("home",context);
                         //new FetchURL(getActivity(),"home").execute(getUrl(departMarkerReservation.getPosition(), destinationMarkerReservation.getPosition(), "driving"), "driving");
 //                        BottomSheetFragmentRequeteFacturation bottomSheetFragmentBooking = new BottomSheetFragmentRequeteFacturation(getActivity(), departLocationReservation, destinationLocationReservation);
 //                        bottomSheetFragmentBooking.show(((FragmentActivity) context).getSupportFragmentManager(), bottomSheetFragmentBooking.getTag());
