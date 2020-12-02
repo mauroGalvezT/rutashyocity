@@ -248,7 +248,7 @@ public class RegistroVehiculoActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     mDialog.dismiss();
                     //Toast.makeText(RegistroVehiculoActivity.this, "Registrado correctamente", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(RegistroVehiculoActivity.this, InicioConductorActivity.class);
+                    Intent i = new Intent(RegistroVehiculoActivity.this, HomeDriverActivity.class);
                     startActivity(i);
                     finish();
                 }else{

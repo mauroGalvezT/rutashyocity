@@ -138,34 +138,27 @@ import retrofit2.Response;
 
 
 public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener,
+        GoogleApiClient.OnConnectionFailedListener,
         GoogleMap.OnMyLocationClickListener,
         GoogleMap.OnMyLocationButtonClickListener,
         RoutingListener{
 
     SmartCityService smartCityService;
     SmartCityClient smartCityClient;
-    ViewPager pager;
-    TabLayout tabs;
+
     View view;
     private Marker mMarker;
     private static Context context;
     public static Activity activity;
     ConnectionDetector connectionDetector;
-    String TAG = "FragmentHome";
+
     ArrayList<String> tabNames = new ArrayList<String>();
     int currpos = 0;
-    //QuickPeriodicJobScheduler jobScheduler;
-    //QuickPeriodicJob job = null;
+
 
     /** MAP **/
     public static GoogleMap mMap;
-    public static Location currentLocation
-            ,destinationLocation = new Location("dummyprovider1")
-            ,departLocationReservation = new Location("dummyprovider2")
-            ,destinationLocationReservation = new Location("dummyprovider3")
-            ,departLocationMesRequetes = new Location("dummyprovider2")
-            ,destinationLocationMesRequetes = new Location("dummyprovider3");
+    public static Location currentLocation;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private static final int LOCATION_REQUEST_CODE = 101;
 
@@ -280,7 +273,7 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
                 Double lat15 = Double.valueOf(response.body().getLatInicio15());
                 Double long15 = Double.valueOf(response.body().getLongInicio15());
                 if(response.isSuccessful()){
-                    Toast.makeText(getContext(), "hay datos", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "hay datos", Toast.LENGTH_SHORT).show();
                     LatLng m1 = new LatLng(lat1, long1);
                     LatLng m2 = new LatLng(lat2, long2);
                     LatLng m3 = new LatLng(lat3, long3);
@@ -366,12 +359,6 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
         layout_main = (RelativeLayout) view.findViewById(R.id.layout_main);
         btn_my_request =(ImageView) view.findViewById(R.id.btn_my_request);
 
-        destinationLocation.setLatitude(-12.067425);
-        destinationLocation.setLongitude(-75.207936);
-        departLocationReservation.setLatitude(-12.067425);
-        departLocationReservation.setLongitude(-75.207936);
-        destinationLocationReservation.setLatitude(-12.067425);
-        destinationLocationReservation.setLongitude(-75.207936);
 
         //Place Autocomplete
         String apikey = getResources().getString(R.string.google_maps_key);
@@ -382,16 +369,7 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
         placesClient = Places.createClient(context);
 
 
-        // Auto complete départ
-        final AutocompleteSupportFragment autocompleteSupportFragment_departs =
-                ((AutocompleteSupportFragment) getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment_depart));
 
-
-
-        /*
-        if(!M.getCountry(context).equals("All"))
-            autocompleteSupportFragment_depart.setCountry(M.getCountry(context));
-*/
 
 
 
@@ -417,9 +395,7 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
         provider = locationManager.getBestProvider(criteria, false);
         if (provider != null) {
             currentLocation = locationManager.getLastKnownLocation(provider);
-//            destinationLocation = locationManager.getLastKnownLocation(provider);
-//            departLocationReservation = locationManager.getLastKnownLocation(provider);
-//            destinationLocationReservation = locationManager.getLastKnownLocation(provider);
+
         }
 
         // we build google api client
@@ -529,35 +505,38 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        if (mMarker != null) {
-            mMarker.remove();
-        }
-        mMarker = mMap.addMarker(new MarkerOptions().position(
-                new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())
-                )
-                        .title("Tu posicion")
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_logo))
-        );
+
+
 
 
 
 
         // Initialize the location fields
-        if (currentLocation != null && mMarker != null) {
-            LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
 
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(latLng)             // Sets the center of the map to location user
-                    .zoom(15)                   // Sets the zoom
-//                    .bearing(90)                // Sets the orientation of the camera to east
-//                    .tilt(40)                   // Sets the tilt of the camera to 30 degrees
 
-                    .build();                   // Creates a CameraPosition from the builder
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        }
+            //LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
 
-        new setCurrentLocation().execute(String.valueOf(currentLocation.getLatitude()),String.valueOf(currentLocation.getLongitude()));
+
+            //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+            if (mMarker != null) {
+                mMarker.remove();
+            }
+            mMarker = mMap.addMarker(new MarkerOptions().position(
+                    new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())
+                    )
+                            .title("Tu posicion")
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_logo))
+            );
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(
+                    new CameraPosition.Builder()
+                            .target(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
+                            .zoom(16f)
+                            .build()
+            ));
+            new setCurrentLocation().execute(String.valueOf(currentLocation.getLatitude()),String.valueOf(currentLocation.getLongitude()));
+
+
+
         rutaEmpresa();
 
 
@@ -577,41 +556,9 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
 
 
 
-    public static void showDirection(String latitude_client, String longitude_client, String latitude_destination, String longitude_destination){
-        if(departMarkerMesRequetes != null && destinationMarkerMesRequetes != null) {
-            departMarkerMesRequetes.remove();
-            destinationMarkerMesRequetes.remove();
-        }
-        addMarkerDepartMesRequetes(new LatLng(Double.parseDouble(latitude_client),Double.parseDouble(longitude_client)));
-        addMarkerDestinationMesRequetes(new LatLng(Double.parseDouble(latitude_destination),Double.parseDouble(longitude_destination)));
 
-        if(destinationMarker != null)
-            destinationMarker.remove();
-        if((departLocationMesRequetes != null && destinationLocationMesRequetes != null) && tabLocation.size() > 1) {
-            tabLocation.clear();
-        }
-        if(departLocationMesRequetes != null && destinationLocationMesRequetes != null){
-            departLocationMesRequetes.setLatitude(Double.parseDouble(latitude_client));
-            departLocationMesRequetes.setLongitude(Double.parseDouble(longitude_client));
-            destinationLocationMesRequetes.setLatitude(Double.parseDouble(latitude_destination));
-            destinationLocationMesRequetes.setLongitude(Double.parseDouble(longitude_destination));
-            tabLocation.add(departLocationMesRequetes);
-            tabLocation.add(destinationLocationMesRequetes);
-        }
 
-        if(departMarkerMesRequetes != null && destinationMarkerMesRequetes != null) {
-            showProgressDialog();
-            //M.setCurrentFragment("mes_requetes_accueil",context);
-            //new FetchURL(context,"home").execute(getUrl(departMarkerMesRequetes.getPosition(), destinationMarkerMesRequetes.getPosition(), "driving"), "driving");
-        }
-    }
 
-    private static void showProgressDialog(){
-        //M.showLoadingDialog(context);
-    }
-    public static void dismissProgressDialog(){
-        // M.hideLoadingDialog();
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -622,11 +569,8 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
                 return;
             }
 
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
-//        MainActivity mainActivity = new MainActivity();
-//        mainActivity.selectItem(0);
+
     }
 
     @Override
@@ -651,32 +595,7 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
         return enabled;
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        this.currentLocation = location;
-        if(verif == false) {
 
-            if (currentLocation != null) {
-                LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-
-                CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(latLng)             // Sets the center of the map to location user
-                        .zoom(15)                   // Sets the zoom
-//                    .bearing(90)                // Sets the orientation of the camera to east
-//                    .tilt(40)                   // Sets the tilt of the camera to 30 degrees
-                        .build();                   // Creates a CameraPosition from the builder
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            }
-            verif = true;
-        }
-
-        if (location != null) {
-            if(currentMarker != null)
-                currentMarker.remove();
-        }
-    }
 
 
 
@@ -696,7 +615,7 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
                 @Override
                 public void onResponse(Call<RespuestaVehiculo> call, Response<RespuestaVehiculo> response) {
                     if(response.isSuccessful()){
-                      //  Toast.makeText(getActivity(), "se envio lat y long", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "se envio lat y long", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getActivity(), "no se envio", Toast.LENGTH_SHORT).show();
                     }
@@ -773,7 +692,7 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
 //            Toast.makeText(this, "You need to enable permissions to display location !", Toast.LENGTH_SHORT).show();
         }
 
-        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+        //LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
     }
     @Override
     public void onConnectionSuspended(int i) {
@@ -820,245 +739,8 @@ public class ConductorHomeFragment extends Fragment  implements OnMapReadyCallba
         alert.show();
     }
 
-    private static void addMarkerDepart(LatLng latLng){
-        // Add Marker to Map
-        MarkerOptions option = new MarkerOptions();
-        option.title(context.getResources().getString(R.string.partida));
-        option.snippet(context.getResources().getString(R.string.tu_punto_de_partida));
-        option.position(latLng);
-        //option.icon(generateBitmapDescriptorFromRes(context, R.drawable.ic_pin_2));
-        departMarkerReservation = mMap.addMarker(option);
-        departMarkerReservation.setTag(context.getResources().getString(R.string.partida));
-    }
 
-    private static void addMarkerDestination(LatLng latLng){
-        // Add Marker to Map
-        MarkerOptions option = new MarkerOptions();
-        option.title(context.getResources().getString(R.string.destino));
-        option.snippet(context.getResources().getString(R.string.quieres_ir_aqui));
-        option.position(latLng);
-        //option.icon(generateBitmapDescriptorFromRes(context, R.drawable.ic_arrival_point_2));
-        destinationMarkerReservation = mMap.addMarker(option);
-        destinationMarkerReservation.setTag(context.getResources().getString(R.string.destino));
-    }
 
-    private static void addMarkerDepartMesRequetes(LatLng latLng){
-        // Add Marker to Map
-        MarkerOptions option = new MarkerOptions();
-        option.title(context.getResources().getString(R.string.partida));
-        option.snippet(context.getResources().getString(R.string.tu_punto_de_partida));
-        option.position(latLng);
-        //option.icon(generateBitmapDescriptorFromRes(context, R.drawable.ic_pin_2));
-        departMarkerMesRequetes = mMap.addMarker(option);
-        departMarkerMesRequetes.setTag(context.getResources().getString(R.string.partida));
-    }
 
-    private static void addMarkerDestinationMesRequetes(LatLng latLng){
-        // Add Marker to Map
-        MarkerOptions option = new MarkerOptions();
-        option.title(context.getResources().getString(R.string.destino));
-        option.snippet(context.getResources().getString(R.string.quieres_ir_aqui));
-        option.position(latLng);
-        //option.icon(generateBitmapDescriptorFromRes(context, R.drawable.ic_arrival_point_2));
-        destinationMarkerMesRequetes = mMap.addMarker(option);
-        destinationMarkerMesRequetes.setTag(context.getResources().getString(R.string.destino));
-    }
-
-    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
-        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
-        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
-        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        vectorDrawable.draw(canvas);
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-    }
-
-    public static BitmapDescriptor generateBitmapDescriptorFromRes(
-            Context context, int resId) {
-        Drawable drawable = ContextCompat.getDrawable(context, resId);
-        drawable.setBounds(
-                0,
-                0,
-                drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight());
-        Bitmap bitmap = Bitmap.createBitmap(
-                drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(),
-                Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.draw(canvas);
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        /*if (requestCode == Constants.PLACE_PICKER_REQUEST) {
-            if (resultCode == Activity.RESULT_OK && data != null) {
-                if((departLocationReservation != null && destinationLocationReservation != null) && tabLocation.size() > 1) {
-                    departMarkerReservation.remove();
-                    destinationMarkerReservation.remove();
-                    tabLocation.clear();
-//                    Toast.makeText(context, "clear", Toast.LENGTH_SHORT).show();
-                }
-                AddressData addressData = data.getParcelableExtra(Constants.ADDRESS_INTENT);
-                if(destinationMarker != null)
-                    destinationMarker.remove();
-                if(currentLocation != null && destinationLocation != null){
-//                    Toast.makeText(context, "Yes", Toast.LENGTH_SHORT).show();
-                    destinationLocation.setLatitude(addressData.getLatitude());
-                    destinationLocation.setLongitude(addressData.getLongitude());
-                    addMarker(new LatLng(addressData.getLatitude(),addressData.getLongitude()));
-                    BottomSheetFragmentRequeteFacturation bottomSheetFragmentBooking = new BottomSheetFragmentRequeteFacturation(getActivity(),currentLocation,destinationLocation);
-                    bottomSheetFragmentBooking.show(((FragmentActivity) context).getSupportFragmentManager(), bottomSheetFragmentBooking.getTag());
-                }
-            }
-        }*/
-
-        if(requestCode == PLACE_PICKER_REQUEST_RESERVATION_DEPART) {
-            if (resultCode == Activity.RESULT_OK && data != null) {
-                if(departMarkerMesRequetes != null)
-                    departMarkerMesRequetes.remove();
-                if(destinationMarkerMesRequetes != null)
-                    destinationMarkerMesRequetes.remove();
-
-                AddressData addressData = data.getParcelableExtra(Constants.ADDRESS_INTENT);
-                if(destinationMarker != null)
-                    destinationMarker.remove();
-
-                LatLng latLng = new LatLng(addressData.getLatitude(),addressData.getLongitude());
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-                CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(latLng)             // Sets the center of the map to location user
-                        .zoom(15)                   // Sets the zoom
-//                    .bearing(90)                // Sets the orientation of the camera to east
-//                    .tilt(40)                   // Sets the tilt of the camera to 30 degrees
-                        .build();                   // Creates a CameraPosition from the builder
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-                if((departLocationReservation != null && destinationLocationReservation != null) && tabLocation.size() > 1) {
-//                    departMarkerReservation.remove();
-//                    destinationMarkerReservation.remove();
-                    tabLocation.clear();
-                    if(departMarkerReservation != null)
-                        departMarkerReservation.remove();
-                    if(destinationMarkerReservation != null)
-                        destinationMarkerReservation.remove();
-                    if(currentPolyline != null)
-                        currentPolyline.remove();
-                }
-                if(departLocationReservation != null && destinationLocationReservation != null){
-                    departLocationReservation.setLatitude(addressData.getLatitude());
-                    departLocationReservation.setLongitude(addressData.getLongitude());
-                    tabLocation.add(departLocationReservation);
-                    if(departMarkerReservation != null)
-                        departMarkerReservation.remove();
-                    addMarkerDepart(new LatLng(addressData.getLatitude(),addressData.getLongitude()));
-
-                    if(departMarkerReservation != null && destinationMarkerReservation != null && tabLocation.size() > 1) {
-                        showProgressDialog();
-                        // M.setCurrentFragment("home",context);
-                        //new FetchURL(getActivity(),"home").execute(getUrl(departMarkerReservation.getPosition(), destinationMarkerReservation.getPosition(), "driving"), "driving");
-//                        BottomSheetFragmentRequeteFacturation bottomSheetFragmentBooking = new BottomSheetFragmentRequeteFacturation(getActivity(), departLocationReservation, destinationLocationReservation);
-//                        bottomSheetFragmentBooking.show(((FragmentActivity) context).getSupportFragmentManager(), bottomSheetFragmentBooking.getTag());
-                    }
-                }
-                input_text_depart.setText(context.getResources().getString(R.string.tu_punto_de_partida));
-
-                try {
-
-                    Geocoder geo = new Geocoder(context, Locale.getDefault());
-                    List<Address> addresses = geo.getFromLocation(latLng.latitude, latLng.longitude, 1);
-                    if (addresses.isEmpty()) {
-//                                Toast.makeText(context, "Waiting for Location", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        if (addresses.size() > 0) {
-                            String address = addresses.get(0).getAddressLine(0);
-                            if(!address.equals("")) {
-                                String[] tabAddress = address.split(",");
-                                input_text_depart.setText(tabAddress[0]);
-//                                    Toast.makeText(context, ""+addresses.get(0).getFeatureName() + ", " + addresses.get(0).getLocality() +", " + addresses.get(0).getAdminArea() + ", " + addresses.get(0).getCountryName(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }else if(requestCode == PLACE_PICKER_REQUEST_RESERVATION_DESTINATION) {
-            if (resultCode == Activity.RESULT_OK && data != null) {
-                if(departMarkerMesRequetes != null)
-                    departMarkerMesRequetes.remove();
-                if(destinationMarkerMesRequetes != null)
-                    destinationMarkerMesRequetes.remove();
-
-                AddressData addressData = data.getParcelableExtra(Constants.ADDRESS_INTENT);
-                if(destinationMarker != null)
-                    destinationMarker.remove();
-
-                LatLng latLng = new LatLng(addressData.getLatitude(),addressData.getLongitude());
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-                CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(latLng)             // Sets the center of the map to location user
-                        .zoom(15)                   // Sets the zoom
-//                    .bearing(90)                // Sets the orientation of the camera to east
-//                    .tilt(40)                   // Sets the tilt of the camera to 30 degrees
-                        .build();                   // Creates a CameraPosition from the builder
-                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-                if((departLocationReservation != null && destinationLocationReservation != null) && tabLocation.size() > 1) {
-//                    departMarkerReservation.remove();
-//                    destinationMarkerReservation.remove();
-                    tabLocation.clear();
-                    if(departMarkerReservation != null)
-                        departMarkerReservation.remove();
-                    if(destinationMarkerReservation != null)
-                        destinationMarkerReservation.remove();
-                    if(currentPolyline != null)
-                        currentPolyline.remove();
-                }
-                if(departLocationReservation != null && destinationLocationReservation != null){
-                    destinationLocationReservation.setLatitude(addressData.getLatitude());
-                    destinationLocationReservation.setLongitude(addressData.getLongitude());
-                    tabLocation.add(departLocationReservation);
-                    if(destinationMarkerReservation != null)
-                        destinationMarkerReservation.remove();
-                    addMarkerDestination(new LatLng(addressData.getLatitude(),addressData.getLongitude()));
-
-                    if(departMarkerReservation != null && destinationMarkerReservation != null && tabLocation.size() > 1) {
-                        showProgressDialog();
-                        //M.setCurrentFragment("home",context);
-                        //new FetchURL(getActivity(),"home").execute(getUrl(departMarkerReservation.getPosition(), destinationMarkerReservation.getPosition(), "driving"), "driving");
-//                        BottomSheetFragmentRequeteFacturation bottomSheetFragmentBooking = new BottomSheetFragmentRequeteFacturation(getActivity(), departLocationReservation, destinationLocationReservation);
-//                        bottomSheetFragmentBooking.show(((FragmentActivity) context).getSupportFragmentManager(), bottomSheetFragmentBooking.getTag());
-                    }
-                }
-                input_text_arrivee.setText(context.getResources().getString(R.string.destino));
-
-                try {
-
-                    Geocoder geo = new Geocoder(context, Locale.getDefault());
-                    List<Address> addresses = geo.getFromLocation(latLng.latitude, latLng.longitude, 1);
-                    if (addresses.isEmpty()) {
-//                                Toast.makeText(context, "Waiting for Location", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        if (addresses.size() > 0) {
-                            String address = addresses.get(0).getAddressLine(0);
-                            if(!address.equals("")) {
-                                String[] tabAddress = address.split(",");
-                                input_text_arrivee.setText(tabAddress[0]);
-//                                    Toast.makeText(context, ""+addresses.get(0).getFeatureName() + ", " + addresses.get(0).getLocality() +", " + addresses.get(0).getAdminArea() + ", " + addresses.get(0).getCountryName(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
 
 }

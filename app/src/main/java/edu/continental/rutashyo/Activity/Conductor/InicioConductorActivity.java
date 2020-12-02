@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,7 +52,9 @@ public class InicioConductorActivity extends AppCompatActivity {
                 .setMessage("Espere un momento")
                 .setCancelable(false).build();
         retrofitInit();
-        openFragment(new ConductorHomeFragment());
+        //openFragment(new ConductorHomeFragment());
+        Intent i = new Intent(InicioConductorActivity.this, HomeDriverActivity.class);
+        startActivity(i);
         //  emailPref = PrefManager.getSomeStringValue(AppConst.PREF_EMAIL);
 
     }
@@ -73,7 +76,9 @@ public class InicioConductorActivity extends AppCompatActivity {
                 @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.itemHome:
-                            openFragment(new ConductorHomeFragment());
+
+                            Intent i = new Intent(InicioConductorActivity.this, HomeDriverActivity.class);
+                            startActivity(i);
                             return true;
                         case R.id.itemProfile:
                             mDialog.show();

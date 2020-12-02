@@ -274,6 +274,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
                 Double long4 = Double.valueOf(response.body().getLongInicio4());
                 Double lat5 = Double.valueOf(response.body().getLatInicio5());
                 Double long5 = Double.valueOf(response.body().getLongInicio5());
+                /*
                 Double lat6 = Double.valueOf(response.body().getLatInicio6());
                 Double long6 = Double.valueOf(response.body().getLongInicio6());
                 Double lat7 = Double.valueOf(response.body().getLatInicio7());
@@ -294,6 +295,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
                 Double long14 = Double.valueOf(response.body().getLongInicio14());
                 Double lat15 = Double.valueOf(response.body().getLatInicio15());
                 Double long15 = Double.valueOf(response.body().getLongInicio15());
+                */
                 if(response.isSuccessful()){
                     //Toast.makeText(getContext(), "hay datos", Toast.LENGTH_SHORT).show();
                     LatLng m1 = new LatLng(lat1, long1);
@@ -301,6 +303,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
                     LatLng m3 = new LatLng(lat3, long3);
                     LatLng m4 = new LatLng(lat4, long4);
                     LatLng m5 = new LatLng(lat5, long5);
+                    /*
                     LatLng m6 = new LatLng(lat6, long6);
                     LatLng m7 = new LatLng(lat7, long7);
                     LatLng m8 = new LatLng(lat8, long8);
@@ -311,6 +314,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
                     LatLng m13 = new LatLng(lat13, long13);
                     LatLng m14 = new LatLng(lat14, long14);
                     LatLng m15 = new LatLng(lat15, long15);
+                    */
                     mMap.addMarker(new MarkerOptions()
                             .position(m1)
                             .title("Inicio Ruta")
@@ -319,7 +323,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
                             .draggable(true)
                     );
                     mMap.addMarker(new MarkerOptions()
-                            .position(m15)
+                            .position(m5)
                             .title("Fin de la ruta")
                             .draggable(true)
                             //.snippet("Final de ruta")
@@ -331,6 +335,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
                             .add(m3)
                             .add(m4)
                             .add(m5)
+                            /*
                             .add(m6)
                             .add(m7)
                             .add(m8)
@@ -341,6 +346,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
                             .add(m13)
                             .add(m14)
                             .add(m15)
+                            */
                             .color(R.color.primaryColor)
                             .width(30);
                     Polyline polyline = mMap.addPolyline(rectOptions);
