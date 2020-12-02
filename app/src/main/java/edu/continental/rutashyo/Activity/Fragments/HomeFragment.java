@@ -1,5 +1,6 @@
 package edu.continental.rutashyo.Activity.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -116,11 +117,16 @@ import java.util.Map;
 
 import static android.content.Context.LOCATION_SERVICE;
 
+import edu.continental.rutashyo.Activity.User.CambiarPassActivity;
+import edu.continental.rutashyo.Activity.User.InicioUserActivity;
 import edu.continental.rutashyo.R;
 //import edu.continental.rutashyo.direcciones.FetchURL;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaEmpresa;
 import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaRutum;
+import edu.continental.rutashyo.Retrofit.Respuesta.RespuestaTipoVehiculo;
 import edu.continental.rutashyo.Retrofit.SmartCityClient;
 import edu.continental.rutashyo.Retrofit.SmartCityService;
+import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudEmpresa;
 import edu.continental.rutashyo.Retrofit.Solicitud.SolicitudRuta;
 import edu.continental.rutashyo.providers.AuthProvider;
 import edu.continental.rutashyo.providers.GeofireProvider;
@@ -143,6 +149,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
     private List<Marker> mDriversMarkers = new ArrayList<>();
     private boolean mIsFirstTime = true;
 
+    public RespuestaEmpresa empresa;
 
     ViewPager pager;
     TabLayout tabs;
@@ -219,6 +226,10 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
     private Marker mMarker;
     SmartCityService smartCityService;
     SmartCityClient smartCityClient;
+
+
+    List<RespuestaEmpresa> empresaList = new ArrayList<>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -250,6 +261,9 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
         call.enqueue(new Callback<RespuestaRutum>() {
             @Override
             public void onResponse(Call<RespuestaRutum> call, Response<RespuestaRutum> response) {
+
+
+                getDrivers();
                 Double lat1 = Double.valueOf(response.body().getLatInicio1());
                 Double long1 = Double.valueOf(response.body().getLongInicio1());
                 Double lat2 = Double.valueOf(response.body().getLatInicio2());
@@ -741,6 +755,33 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
         return view;
     }
 
+    private void getDrivers(){
+
+        final String idEmpresa = SharedPreferencesManager.getSomeStringValue(AppConst.PREF_IDEMPRESA);
+
+        SolicitudEmpresa solicitudEmpresa=new SolicitudEmpresa(idEmpresa);
+        Call<List<RespuestaEmpresa>> call=smartCityService.getDrivers(solicitudEmpresa);
+        call.enqueue(new Callback<List<RespuestaEmpresa>>() {
+            @Override
+            public void onResponse(Call<List<RespuestaEmpresa>> call, Response<List<RespuestaEmpresa>> response) {
+                if (response.isSuccessful()){
+                    for (RespuestaEmpresa post : response.body()){
+
+                        String lat=empresa.getCONLatitud();
+                        String lon= empresa.getCONLongitud();
+                        empresaList.add(new RespuestaEmpresa(lat,lon));
+                        Toast.makeText(getContext(), ":"+ empresaList.get(0), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RespuestaEmpresa>> call, Throwable t) {
+
+            }
+        });
+
+    }
 
     LocationCallback mLocationCallback = new LocationCallback() {
         @Override

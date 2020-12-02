@@ -73,7 +73,7 @@ public interface SmartCityService {
     Call<List<Empresa>> getAllEmpresas();
 
     @POST("smartcityhyo.tk/movurbana/api/driver/getlocation")
-    Call<RespuestaEmpresa> getDrivers(@Body SolicitudEmpresa solicitudEmpresa);
+    Call<List<RespuestaEmpresa>> getDrivers(@Body SolicitudEmpresa solicitudEmpresa);
 
 
 

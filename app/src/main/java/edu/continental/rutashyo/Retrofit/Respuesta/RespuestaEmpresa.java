@@ -41,6 +41,13 @@ public class RespuestaEmpresa {
         this.cONStatus = cONStatus;
     }
 
+    public RespuestaEmpresa(String lat, String lon) {
+        super();
+
+        this.cONLatitud = lat;
+        this.cONLongitud = lon;
+    }
+
     public String getIDConductor() {
         return iDConductor;
     }
