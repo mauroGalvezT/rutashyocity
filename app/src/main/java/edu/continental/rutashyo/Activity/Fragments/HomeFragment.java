@@ -778,6 +778,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
                 Double long2 = Double.valueOf(response.body().getLong2());
                 Double lat3 = Double.valueOf(response.body().getLat3());
                 Double long3 = Double.valueOf(response.body().getLong3());
+
                 if(response.isSuccessful()){
 
                     LatLng c1 = new LatLng(lat1, long1);
@@ -922,6 +923,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
         //new getTaxi().execute();
         //initJobs();
         rutaEmpresa();
+        getDrivers();
     }
 
     public static void showDirection(String latitude_client, String longitude_client, String latitude_destination, String longitude_destination){
