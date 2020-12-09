@@ -60,6 +60,7 @@
     <string name="seleccione_su_tipo_de_vehiculo">Seleccione su tipo de vehiculo</string>
     <string name="text_ver_ruta">Ver Ruta</string>
     <string name="empresas">Empresas</string>
+    <string name="text_empresas_list">Empresas de Transporte</string>
 
 
 </resources>

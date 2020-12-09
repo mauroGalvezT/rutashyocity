@@ -1,6 +1,7 @@
 package edu.continental.rutashyo.Activity.Fragments;
 
 import android.content.SharedPreferences;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -115,6 +116,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Timer;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -923,6 +925,7 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
         //new getTaxi().execute();
         //initJobs();
         rutaEmpresa();
+
         getDrivers();
     }
 
