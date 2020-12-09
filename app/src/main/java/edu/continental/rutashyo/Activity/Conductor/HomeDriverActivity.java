@@ -103,7 +103,7 @@ public class HomeDriverActivity extends AppCompatActivity implements OnMapReadyC
                             new LatLng(location.getLatitude(), location.getLongitude())
                             )
                                     .title("Tu posicion")
-                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_logo))
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_icone))
                     );
                     // OBTENER LA LOCALIZACION DEL USUARIO EN TIEMPO REAL
                     mMap.moveCamera(CameraUpdateFactory.newCameraPosition(
@@ -347,7 +347,10 @@ public class HomeDriverActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        //LatLng hyo = new LatLng(-12.0668271, -75.2141605);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-12.0668271, -75.2141605), 10));
         //mMap.getUiSettings().setZoomControlsEnabled(true);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
