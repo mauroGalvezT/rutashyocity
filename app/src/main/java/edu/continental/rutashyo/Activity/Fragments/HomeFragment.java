@@ -786,13 +786,13 @@ public class HomeFragment extends Fragment  implements OnMapReadyCallback, Googl
                     LatLng c3 = new LatLng(lat3, long3);
 
                     if(c1!=null){
-                        mMap.addMarker(new MarkerOptions().position(c1).title("Conductor disponible").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_logo)));
+                        mMap.addMarker(new MarkerOptions().position(c1).title("Conductor disponible").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_icone)));
                     }
                     if(c2!=null){
-                        mMap.addMarker(new MarkerOptions().position(c2).title("Conductor disponible").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_logo)));
+                        mMap.addMarker(new MarkerOptions().position(c2).title("Conductor disponible").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_icone)));
                     }
                     if(c3!=null){
-                        mMap.addMarker(new MarkerOptions().position(c3).title("Conductor disponible").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_logo)));
+                        mMap.addMarker(new MarkerOptions().position(c3).title("Conductor disponible").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_icone)));
                     }
 
 
